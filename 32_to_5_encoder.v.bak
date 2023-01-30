@@ -1,0 +1,4 @@
+module 32_to_5_encoder(
+	input clk,
+	
+);
