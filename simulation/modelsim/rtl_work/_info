@@ -1,0 +1,45 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\altera\13.0sp1\elec374\simulation\modelsim
+vreg32
+I6>dUN3Q;<i7GS`hUk2bfe0
+V1]n@8FQ2okFCH`EX>I^Th3
+Z1 dC:\altera\13.0sp1\elec374\simulation\modelsim
+w1675109272
+8C:/altera/13.0sp1/elec374/reg32.v
+FC:/altera/13.0sp1/elec374/reg32.v
+L0 1
+Z2 OV;L;10.1d;51
+r1
+31
+Z3 o-vlog01compat -work work -O0
+!i10b 1
+!s100 Adn?XEIL9n@dIcGAkm<aJ1
+!s85 0
+!s108 1675110806.002000
+!s107 C:/altera/13.0sp1/elec374/reg32.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/altera/13.0sp1/elec374|C:/altera/13.0sp1/elec374/reg32.v|
+!s101 -O0
+Z4 !s92 -vlog01compat -work work +incdir+C:/altera/13.0sp1/elec374 -O0
+vreg32_tb
+!i10b 1
+!s100 Y=U`e?W7H=E0Ge;oRN7_50
+IOQTPP?MZEd3_baRoI^;Zo1
+V8Y:LczTb=RRTEz<A4@i;M0
+R1
+w1675110598
+8C:/altera/13.0sp1/elec374/reg32_tb.v
+FC:/altera/13.0sp1/elec374/reg32_tb.v
+L0 2
+R2
+r1
+!s85 0
+31
+!s108 1675110806.113000
+!s107 C:/altera/13.0sp1/elec374/reg32_tb.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/altera/13.0sp1/elec374|C:/altera/13.0sp1/elec374/reg32_tb.v|
+!s101 -O0
+R3
+R4

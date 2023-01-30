@@ -1,0 +1,15 @@
+module reg(
+	input wire clk, clr, en,
+	input wire [31:0] D,
+	output reg [31:0] Q
+);
+
+	initial Q = 0;
+	always@(posedge clk)
+	begin
+		if(clk)
+			Q[31:0]<= D[31:0];
+		if(clr)
+			Q[31:0]<= 32'b0;
+	end
+endmodule
