@@ -109,16 +109,10 @@ module enc_32_to_1_tb;
 			mux_input_30 <= 32'd62;
 			mux_input_31 <= 32'd64;
 
-
 			for(i = 0; i < 32; i = i + 1) begin
 				mux_sel = i;
 				#10;
-			end
-			
-			
-			
-			
-			
+			end		
 		end	
 endmodule
 
