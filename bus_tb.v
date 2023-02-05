@@ -1,7 +1,30 @@
 `timescale 1 ns/10 ps
 module bus_tb;
 	// bus device select
-	reg [31:0] bus_select;
+	reg R0out;
+	reg R1out;
+	reg R2out;
+	reg R3out;
+	reg R4out;
+	reg R5out;
+	reg R6out;
+	reg R7out;
+	reg R8out;
+	reg R9out;
+	reg R10out;
+	reg R11out;
+	reg R12out;
+	reg R13out;
+	reg R14out;
+	reg R15out;
+	reg HIout;
+	reg LOout;
+	reg Zhighout;
+	reg Zlowout;
+	reg PCout;
+	reg MDRout;
+	reg InPortout;
+	reg Cout;
 	// bus inputs
 	reg [31:0] BusMuxIn_R0;
 	reg [31:0] BusMuxIn_R1;
@@ -31,7 +54,30 @@ module bus_tb;
 	wire [31:0] BusMuxOut;
 
 	bus bus_instance(
-		.bus_enc_input(bus_select),
+		.R0out(R0out), 
+		.R1out(R1out),
+		.R2out(R2out),
+		.R3out(R3out),
+		.R4out(R4out),
+		.R5out(R5out),
+		.R6out(R6out),
+		.R7out(R7out),
+		.R8out(R8out),
+		.R9out(R9out),
+		.R10out(R10out),
+		.R11out(R11out),
+		.R12out(R12out),
+		.R13out(R13out),
+		.R14out(R14out),
+		.R15out(R15out),
+		.HIout(HIout),
+		.LOout(LOout),
+		.Zhighout(Zhighout),
+		.Zlowout(Zlowout),
+		.PCout(PCout),
+		.MDRout(MDRout),
+		.InPortout(InPortout),
+		.Cout(Cout),
 		.BusMuxIn_R0(BusMuxIn_R0),
 		.BusMuxIn_R1(BusMuxIn_R1),
 		.BusMuxIn_R2(BusMuxIn_R2),
@@ -87,53 +133,102 @@ module bus_tb;
 			BusMuxIn_InPort <= 32'd46;
 			C_sign_extended <= 32'd48;
 			// loop through all input selects
-			bus_select <= 32'h00000001;
+			R0out <= 0;
+			R1out <= 0;
+			R2out <= 0;
+			R3out <= 0;
+			R4out <= 0;
+			R5out <= 0;
+			R6out <= 0;
+			R7out <= 0;
+			R8out <= 0;
+			R9out <= 0;
+			R10out <= 0;
+			R11out <= 0;
+			R12out <= 0;
+			R13out <= 0;
+			R14out <= 0;
+			R15out <= 0;
+			HIout <= 0;
+			LOout <= 0;
+			Zhighout <= 0;
+			Zlowout <= 0;
+			PCout <= 0;
+			MDRout <= 0;
+			InPortout <= 0;
+			Cout <= 0;
+			// start testing
+			R0out <= 1;
 			#10;
-			bus_select <= 32'h00000002;
+			R0out <= 0;
+			R1out <= 1;
 			#10;
-			bus_select <= 32'h00000004;
+			R1out <= 0;
+			R2out <= 1;
 			#10;
-			bus_select <= 32'h00000008;
+			R2out <= 0;
+			R3out <= 1;
 			#10;
-			bus_select <= 32'h00000010;
+			R3out <= 0;
+			R4out <= 1;
 			#10;
-			bus_select <= 32'h00000020;
+			R4out <= 0;
+			R5out <= 1;
 			#10;
-			bus_select <= 32'h00000040;
+			R5out <= 0;
+			R6out <= 1;
 			#10;
-			bus_select <= 32'h00000080;
+			R6out <= 0;
+			R7out <= 1;
 			#10;
-			bus_select <= 32'h00000100;
+			R7out <= 0;
+			R8out <= 1;
 			#10;
-			bus_select <= 32'h00000200;
+			R8out <= 0;
+			R9out <= 1;
 			#10;
-			bus_select <= 32'h00000400;
+			R9out <= 0;
+			R10out <= 1;
 			#10;
-			bus_select <= 32'h00000800;
+			R10out <= 0;
+			R11out <= 1;
 			#10;
-			bus_select <= 32'h00001000;
+			R11out <= 0;
+			R12out <= 1;
 			#10;
-			bus_select <= 32'h00002000;
+			R12out <= 0;
+			R13out <= 1;
 			#10;
-			bus_select <= 32'h00004000;
+			R13out <= 0;
+			R14out <= 1;
 			#10;
-			bus_select <= 32'h00008000;
+			R14out <= 0;
+			R15out <= 1;
 			#10;
-			bus_select <= 32'h00010000;
+			R15out <= 0;
+			HIout <= 1;
 			#10;
-			bus_select <= 32'h00020000;
+			HIout <= 0;
+			LOout <= 1;
 			#10;
-			bus_select <= 32'h00040000;
+			LOout <= 0;
+			Zhighout <= 1;
 			#10;
-			bus_select <= 32'h00080000;
+			Zhighout <= 0;
+			Zlowout <= 1;
 			#10;
-			bus_select <= 32'h00100000;
+			Zlowout <= 0;
+			PCout <= 1;
 			#10;
-			bus_select <= 32'h00200000;
+			PCout <= 0;
+			MDRout <= 1;
 			#10;
-			bus_select <= 32'h00400000;
+			MDRout <= 0;
+			InPortout <= 1;
 			#10;
-			bus_select <= 32'h00800000;
+			InPortout <= 0;
+			Cout <= 1;
 			#10;
+			Cout <= 0;
 		end
 endmodule

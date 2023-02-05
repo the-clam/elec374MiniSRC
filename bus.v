@@ -1,8 +1,31 @@
 `timescale 1ns / 10ps
 module bus (
-	// input to 32-to-5 encoder
-   input wire [31:0] bus_enc_input,
-   // input to 32-to-1 mux
+	// select signals
+   input wire R0out,
+   input wire R1out,
+   input wire R2out,
+   input wire R3out,
+   input wire R4out,
+   input wire R5out,
+   input wire R6out,
+   input wire R7out,
+   input wire R8out,
+   input wire R9out,
+   input wire R10out,
+   input wire R11out,
+   input wire R12out,
+   input wire R13out,
+   input wire R14out,
+   input wire R15out,
+   input wire HIout,
+   input wire LOout,
+   input wire Zhighout,
+   input wire Zlowout,
+   input wire PCout,
+   input wire MDRout,
+   input wire InPortout,
+   input wire Cout,
+   // 32 bit input to 32-to-1 mux
 	input wire [31:0] BusMuxIn_R0,
 	input wire [31:0] BusMuxIn_R1,
 	input wire [31:0] BusMuxIn_R2,
@@ -31,8 +54,11 @@ module bus (
 	output wire [31:0] BusMuxOut	
 );
 
+	// intermediate input to 32-to-5 encoder, will be assigned based on which signal selected
+   reg [31:0] bus_enc_input;
    // intermediate output from 32-to-5 encoder, to be put into 32-to-1 mux
    wire [4:0] bus_enc_output;
+   
 
    enc_32_to_5 bus_encoder(
 		.enc_input(bus_enc_input),
@@ -68,7 +94,34 @@ module bus (
         .mux_out(BusMuxOut)
 	);
 
-
+	always@(*)
+	begin
+		if(R0out) bus_enc_input <= 32'h00000001;
+		else if(R1out) bus_enc_input <= 32'h00000002;
+		else if(R2out) bus_enc_input <= 32'h00000004;
+		else if(R3out) bus_enc_input <= 32'h00000008;
+		else if(R4out) bus_enc_input <= 32'h00000010;
+		else if(R5out) bus_enc_input <= 32'h00000020;
+		else if(R6out) bus_enc_input <= 32'h00000040;
+		else if(R7out) bus_enc_input <= 32'h00000080;
+		else if(R8out) bus_enc_input <= 32'h00000100;
+		else if(R9out) bus_enc_input <= 32'h00000200;
+		else if(R10out) bus_enc_input <= 32'h00000400;
+		else if(R11out) bus_enc_input <= 32'h00000800;
+		else if(R12out) bus_enc_input <= 32'h00001000;
+		else if(R13out) bus_enc_input <= 32'h00002000;
+		else if(R14out) bus_enc_input <= 32'h00004000;
+		else if(R15out) bus_enc_input <= 32'h00008000;
+		else if(HIout) bus_enc_input <= 32'h00010000;
+		else if(LOout) bus_enc_input <= 32'h00020000;
+		else if(Zhighout) bus_enc_input <= 32'h00040000;
+		else if(Zlowout) bus_enc_input <= 32'h00080000;
+		else if(PCout) bus_enc_input <= 32'h00100000;
+		else if(MDRout) bus_enc_input <= 32'h00200000;
+		else if(InPortout) bus_enc_input <= 32'h00400000;
+		else if(Cout) bus_enc_input <= 32'h00800000;
+		else bus_enc_input <= 32'h0;
+	end
 endmodule
 			
 
