@@ -1,6 +1,0 @@
-module bidirectional_bus(
-	input wire [31:0] encoder_in,
-	input 
-);
-
-endmodule

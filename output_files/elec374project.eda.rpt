@@ -1,5 +1,5 @@
 EDA Netlist Writer report for elec374project
-Mon Jan 30 15:08:08 2023
+Sun Feb 05 00:50:29 2023
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -36,9 +36,9 @@ applicable agreement for further details.
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Mon Jan 30 15:08:08 2023 ;
+; EDA Netlist Writer Status ; Successful - Sun Feb 05 00:50:29 2023 ;
 ; Revision Name             ; elec374project                        ;
-; Top-level Entity Name     ; reg32                                 ;
+; Top-level Entity Name     ; enc_2_to_1                            ;
 ; Family                    ; Cyclone III                           ;
 ; Simulation Files Creation ; Successful                            ;
 +---------------------------+---------------------------------------+
@@ -66,20 +66,20 @@ applicable agreement for further details.
 +---------------------------------------------------------------------------------------------------+---------------------------+
 
 
-+---------------------------------------------------------------------------------------+
-; Simulation Generated Files                                                            ;
-+---------------------------------------------------------------------------------------+
-; Generated Files                                                                       ;
-+---------------------------------------------------------------------------------------+
-; C:/altera/13.0sp1/elec374/simulation/modelsim/elec374project_6_1200mv_85c_slow.vo     ;
-; C:/altera/13.0sp1/elec374/simulation/modelsim/elec374project_6_1200mv_0c_slow.vo      ;
-; C:/altera/13.0sp1/elec374/simulation/modelsim/elec374project_min_1200mv_0c_fast.vo    ;
-; C:/altera/13.0sp1/elec374/simulation/modelsim/elec374project.vo                       ;
-; C:/altera/13.0sp1/elec374/simulation/modelsim/elec374project_6_1200mv_85c_v_slow.sdo  ;
-; C:/altera/13.0sp1/elec374/simulation/modelsim/elec374project_6_1200mv_0c_v_slow.sdo   ;
-; C:/altera/13.0sp1/elec374/simulation/modelsim/elec374project_min_1200mv_0c_v_fast.sdo ;
-; C:/altera/13.0sp1/elec374/simulation/modelsim/elec374project_v.sdo                    ;
-+---------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------+
+; Simulation Generated Files                                                                   ;
++----------------------------------------------------------------------------------------------+
+; Generated Files                                                                              ;
++----------------------------------------------------------------------------------------------+
+; C:/altera/13.0sp1/elec374project/simulation/modelsim/elec374project_6_1200mv_85c_slow.vo     ;
+; C:/altera/13.0sp1/elec374project/simulation/modelsim/elec374project_6_1200mv_0c_slow.vo      ;
+; C:/altera/13.0sp1/elec374project/simulation/modelsim/elec374project_min_1200mv_0c_fast.vo    ;
+; C:/altera/13.0sp1/elec374project/simulation/modelsim/elec374project.vo                       ;
+; C:/altera/13.0sp1/elec374project/simulation/modelsim/elec374project_6_1200mv_85c_v_slow.sdo  ;
+; C:/altera/13.0sp1/elec374project/simulation/modelsim/elec374project_6_1200mv_0c_v_slow.sdo   ;
+; C:/altera/13.0sp1/elec374project/simulation/modelsim/elec374project_min_1200mv_0c_v_fast.sdo ;
+; C:/altera/13.0sp1/elec374project/simulation/modelsim/elec374project_v.sdo                    ;
++----------------------------------------------------------------------------------------------+
 
 
 +-----------------------------+
@@ -88,19 +88,19 @@ applicable agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit EDA Netlist Writer
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Mon Jan 30 15:08:08 2023
+    Info: Processing started: Sun Feb 05 00:50:29 2023
 Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off elec374project -c elec374project
-Info (204019): Generated file elec374project_6_1200mv_85c_slow.vo in folder "C:/altera/13.0sp1/elec374/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file elec374project_6_1200mv_0c_slow.vo in folder "C:/altera/13.0sp1/elec374/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file elec374project_min_1200mv_0c_fast.vo in folder "C:/altera/13.0sp1/elec374/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file elec374project.vo in folder "C:/altera/13.0sp1/elec374/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file elec374project_6_1200mv_85c_v_slow.sdo in folder "C:/altera/13.0sp1/elec374/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file elec374project_6_1200mv_0c_v_slow.sdo in folder "C:/altera/13.0sp1/elec374/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file elec374project_min_1200mv_0c_v_fast.sdo in folder "C:/altera/13.0sp1/elec374/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file elec374project_v.sdo in folder "C:/altera/13.0sp1/elec374/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file elec374project_6_1200mv_85c_slow.vo in folder "C:/altera/13.0sp1/elec374project/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file elec374project_6_1200mv_0c_slow.vo in folder "C:/altera/13.0sp1/elec374project/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file elec374project_min_1200mv_0c_fast.vo in folder "C:/altera/13.0sp1/elec374project/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file elec374project.vo in folder "C:/altera/13.0sp1/elec374project/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file elec374project_6_1200mv_85c_v_slow.sdo in folder "C:/altera/13.0sp1/elec374project/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file elec374project_6_1200mv_0c_v_slow.sdo in folder "C:/altera/13.0sp1/elec374project/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file elec374project_min_1200mv_0c_v_fast.sdo in folder "C:/altera/13.0sp1/elec374project/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file elec374project_v.sdo in folder "C:/altera/13.0sp1/elec374project/simulation/modelsim/" for EDA simulation tool
 Info: Quartus II 64-Bit EDA Netlist Writer was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 4512 megabytes
-    Info: Processing ended: Mon Jan 30 15:08:08 2023
+    Info: Peak virtual memory: 4510 megabytes
+    Info: Processing ended: Sun Feb 05 00:50:29 2023
     Info: Elapsed time: 00:00:00
     Info: Total CPU time (on all processors): 00:00:00
 

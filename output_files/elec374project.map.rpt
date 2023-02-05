@@ -1,5 +1,5 @@
-Analysis & Synthesis report for elec374project
-Mon Jan 30 15:32:24 2023
+Analysis & Elaboration report for elec374project
+Sun Feb 05 01:37:19 2023
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -7,16 +7,12 @@ Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edit
 ; Table of Contents ;
 ---------------------
   1. Legal Notice
-  2. Analysis & Synthesis Summary
-  3. Analysis & Synthesis Settings
-  4. Parallel Compilation
-  5. Analysis & Synthesis Source Files Read
-  6. Analysis & Synthesis Resource Usage Summary
-  7. Analysis & Synthesis Resource Utilization by Entity
-  8. General Register Statistics
-  9. Multiplexer Restructuring Statistics (Restructuring Performed)
- 10. Elapsed Time Per Partition
- 11. Analysis & Synthesis Messages
+  2. Analysis & Elaboration Summary
+  3. Parallel Compilation
+  4. Analysis & Elaboration Settings
+  5. Port Connectivity Checks: "enc_32_to_1:enc_32_to_1_instance"
+  6. Analysis & Elaboration Messages
+  7. Analysis & Elaboration Suppressed Messages
 
 
 
@@ -40,32 +36,43 @@ applicable agreement for further details.
 
 
 +--------------------------------------------------------------------------------------+
-; Analysis & Synthesis Summary                                                         ;
+; Analysis & Elaboration Summary                                                       ;
 +------------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Mon Jan 30 15:32:24 2023           ;
+; Analysis & Elaboration Status      ; Successful - Sun Feb 05 01:37:19 2023           ;
 ; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; elec374project                                  ;
-; Top-level Entity Name              ; reg32                                           ;
+; Top-level Entity Name              ; enc_32_to_1_tb                                  ;
 ; Family                             ; Cyclone III                                     ;
-; Total logic elements               ; 33                                              ;
-;     Total combinational functions  ; 33                                              ;
-;     Dedicated logic registers      ; 32                                              ;
-; Total registers                    ; 32                                              ;
-; Total pins                         ; 67                                              ;
-; Total virtual pins                 ; 0                                               ;
-; Total memory bits                  ; 0                                               ;
-; Embedded Multiplier 9-bit elements ; 0                                               ;
-; Total PLLs                         ; 0                                               ;
+; Total logic elements               ; N/A until Partition Merge                       ;
+;     Total combinational functions  ; N/A until Partition Merge                       ;
+;     Dedicated logic registers      ; N/A until Partition Merge                       ;
+; Total registers                    ; N/A until Partition Merge                       ;
+; Total pins                         ; N/A until Partition Merge                       ;
+; Total virtual pins                 ; N/A until Partition Merge                       ;
+; Total memory bits                  ; N/A until Partition Merge                       ;
+; Embedded Multiplier 9-bit elements ; N/A until Partition Merge                       ;
+; Total PLLs                         ; N/A until Partition Merge                       ;
 +------------------------------------+-------------------------------------------------+
+
+
+Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
++-------------------------------------+
+; Parallel Compilation                ;
++----------------------------+--------+
+; Processors                 ; Number ;
++----------------------------+--------+
+; Number detected on machine ; 12     ;
+; Maximum allowed            ; 1      ;
++----------------------------+--------+
 
 
 +----------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Settings                                                                                        ;
+; Analysis & Elaboration Settings                                                                                      ;
 +----------------------------------------------------------------------------+--------------------+--------------------+
 ; Option                                                                     ; Setting            ; Default Value      ;
 +----------------------------------------------------------------------------+--------------------+--------------------+
 ; Device                                                                     ; EP3C16F484C6       ;                    ;
-; Top-level entity name                                                      ; reg32              ; elec374project     ;
+; Top-level entity name                                                      ; enc_32_to_1_tb     ; elec374project     ;
 ; Family name                                                                ; Cyclone III        ; Cyclone IV GX      ;
 ; Use smart compilation                                                      ; Off                ; Off                ;
 ; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
@@ -146,124 +153,49 @@ applicable agreement for further details.
 +----------------------------------------------------------------------------+--------------------+--------------------+
 
 
-Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
-+-------------------------------------+
-; Parallel Compilation                ;
-+----------------------------+--------+
-; Processors                 ; Number ;
-+----------------------------+--------+
-; Number detected on machine ; 8      ;
-; Maximum allowed            ; 1      ;
-+----------------------------+--------+
++-------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "enc_32_to_1:enc_32_to_1_instance"                                                      ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; Port    ; Type   ; Severity ; Details                                                                             ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
+; mux_out ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++---------+--------+----------+-------------------------------------------------------------------------------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                    ;
-+----------------------------------+-----------------+------------------------+-----------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path      ; Library ;
-+----------------------------------+-----------------+------------------------+-----------------------------------+---------+
-; reg32.v                          ; yes             ; User Verilog HDL File  ; C:/altera/13.0sp1/elec374/reg32.v ;         ;
-+----------------------------------+-----------------+------------------------+-----------------------------------+---------+
-
-
-+---------------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary             ;
-+---------------------------------------------+-----------+
-; Resource                                    ; Usage     ;
-+---------------------------------------------+-----------+
-; Estimated Total logic elements              ; 33        ;
-;                                             ;           ;
-; Total combinational functions               ; 33        ;
-; Logic element usage by number of LUT inputs ;           ;
-;     -- 4 input functions                    ; 0         ;
-;     -- 3 input functions                    ; 0         ;
-;     -- <=2 input functions                  ; 33        ;
-;                                             ;           ;
-; Logic elements by mode                      ;           ;
-;     -- normal mode                          ; 33        ;
-;     -- arithmetic mode                      ; 0         ;
-;                                             ;           ;
-; Total registers                             ; 32        ;
-;     -- Dedicated logic registers            ; 32        ;
-;     -- I/O registers                        ; 0         ;
-;                                             ;           ;
-; I/O pins                                    ; 67        ;
-; Embedded Multiplier 9-bit elements          ; 0         ;
-; Maximum fan-out node                        ; clr~input ;
-; Maximum fan-out                             ; 33        ;
-; Total fan-out                               ; 261       ;
-; Average fan-out                             ; 1.31      ;
-+---------------------------------------------+-----------+
-
-
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                         ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------+--------------+
-; Compilation Hierarchy Node ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name ; Library Name ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------+--------------+
-; |reg32                     ; 33 (33)           ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 67   ; 0            ; |reg32              ; work         ;
-+----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------+--------------+
-Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
-
-
-+------------------------------------------------------+
-; General Register Statistics                          ;
-+----------------------------------------------+-------+
-; Statistic                                    ; Value ;
-+----------------------------------------------+-------+
-; Total registers                              ; 32    ;
-; Number of registers using Synchronous Clear  ; 0     ;
-; Number of registers using Synchronous Load   ; 0     ;
-; Number of registers using Asynchronous Clear ; 0     ;
-; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 32    ;
-; Number of registers using Preset             ; 0     ;
-+----------------------------------------------+-------+
-
-
-+------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                           ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
-; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |reg32|Q[0]~reg0           ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
-
-
-+-------------------------------+
-; Elapsed Time Per Partition    ;
-+----------------+--------------+
-; Partition Name ; Elapsed Time ;
-+----------------+--------------+
-; Top            ; 00:00:00     ;
-+----------------+--------------+
-
-
-+-------------------------------+
-; Analysis & Synthesis Messages ;
-+-------------------------------+
++---------------------------------+
+; Analysis & Elaboration Messages ;
++---------------------------------+
 Info: *******************************************************************
-Info: Running Quartus II 64-Bit Analysis & Synthesis
+Info: Running Quartus II 64-Bit Analysis & Elaboration
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Mon Jan 30 15:32:23 2023
-Info: Command: quartus_map --read_settings_files=on --write_settings_files=off elec374project -c elec374project
-Warning (20028): Parallel compilation is not licensed and has been disabled
+    Info: Processing started: Sun Feb 05 01:37:19 2023
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off elec374project -c elec374project --analysis_and_elaboration
 Info (12021): Found 1 design units, including 1 entities, in source file reg32.v
     Info (12023): Found entity 1: reg32
 Info (12021): Found 1 design units, including 1 entities, in source file reg32_tb.v
     Info (12023): Found entity 1: reg32_tb
-Info (12127): Elaborating entity "reg32" for the top level hierarchy
-Info (286030): Timing-Driven Synthesis is running
-Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
-    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 100 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 35 input pins
-    Info (21059): Implemented 32 output pins
-    Info (21061): Implemented 33 logic cells
-Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4586 megabytes
-    Info: Processing ended: Mon Jan 30 15:32:24 2023
-    Info: Elapsed time: 00:00:01
-    Info: Total CPU time (on all processors): 00:00:01
+Info (12021): Found 1 design units, including 1 entities, in source file enc_2_to_1.v
+    Info (12023): Found entity 1: enc_2_to_1
+Info (12021): Found 1 design units, including 1 entities, in source file enc_32_to_1.v
+    Info (12023): Found entity 1: enc_32_to_1
+Info (12021): Found 1 design units, including 1 entities, in source file enc_2_to_1_tb.v
+    Info (12023): Found entity 1: enc_2_to_1_tb
+Info (12021): Found 1 design units, including 1 entities, in source file enc_32_to_1_tb.v
+    Info (12023): Found entity 1: enc_32_to_1_tb
+Info (12127): Elaborating entity "enc_32_to_1_tb" for the top level hierarchy
+Warning (10230): Verilog HDL assignment warning at enc_32_to_1_tb.v(114): truncated value with size 32 to match size of target (5)
+Info (12128): Elaborating entity "enc_32_to_1" for hierarchy "enc_32_to_1:enc_32_to_1_instance"
+Info (144001): Generated suppressed messages file C:/altera/13.0sp1/elec374project/output_files/elec374project.map.smsg
+Info: Quartus II 64-Bit Analysis & Elaboration was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 4567 megabytes
+    Info: Processing ended: Sun Feb 05 01:37:19 2023
+    Info: Elapsed time: 00:00:00
+    Info: Total CPU time (on all processors): 00:00:00
+
+
++--------------------------------------------+
+; Analysis & Elaboration Suppressed Messages ;
++--------------------------------------------+
+The suppressed messages can be found in C:/altera/13.0sp1/elec374project/output_files/elec374project.map.smsg.
 
 
