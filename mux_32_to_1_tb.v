@@ -1,5 +1,5 @@
 `timescale 1 ns/10 ps
-module enc_32_to_1_tb;
+module mux_32_to_1_tb;
 	reg [31:0] mux_input_0;
 	reg [31:0] mux_input_1;
 	reg [31:0] mux_input_2;
@@ -35,7 +35,7 @@ module enc_32_to_1_tb;
 	reg [4:0] mux_sel;
 	wire [31:0] mux_out;
 	
-	enc_32_to_1 enc_32_to_1_instance(
+	mux_32_to_1 mux_32_to_1_instance(
 		.mux_input_0(mux_input_0),
 		.mux_input_1(mux_input_1),
 		.mux_input_2(mux_input_2),

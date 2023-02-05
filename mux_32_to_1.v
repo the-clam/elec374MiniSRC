@@ -1,5 +1,5 @@
 `timescale 1 ns/10 ps
-module enc_32_to_1(
+module mux_32_to_1(
 	// mux inputs
 	input wire [31:0] mux_input_0,
 	input wire [31:0] mux_input_1,
