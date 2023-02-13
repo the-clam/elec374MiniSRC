@@ -1,38 +1,44 @@
-module alu_rol (input wire [31:0] in, input wire [4:0] numRotateBits, output reg [31:0] out);
-	always@(*) begin
-		case(numRotateBits)
-			5'd1 : out <= {in[30:0], in[31]};
-			5'd2 : out <= {in[29:0], in[31:30]};
-			5'd3 : out <= {in[28:0], in[31:29]};
-			5'd4 : out <= {in[27:0], in[31:28]};
-			5'd5 : out <= {in[26:0], in[31:27]};
-			5'd6 : out <= {in[25:0], in[31:26]};
-			5'd7 : out <= {in[24:0], in[31:25]};
-			5'd8 : out <= {in[23:0], in[31:24]};
-			5'd9 : out <= {in[22:0], in[31:23]};
-			5'd10: out <= {in[21:0], in[31:22]};
-			5'd11: out <= {in[20:0], in[31:21]};
-			5'd12: out <= {in[19:0], in[31:20]};
-			5'd13: out <= {in[18:0], in[31:19]};
-			5'd14: out <= {in[17:0], in[31:18]};
-			5'd15: out <= {in[16:0], in[31:17]};
-			5'd16: out <= {in[15:0], in[31:16]};
-			5'd17: out <= {in[14:0], in[31:15]};
-			5'd18: out <= {in[13:0], in[31:14]};
-			5'd19: out <= {in[12:0], in[31:13]};
-			5'd20: out <= {in[11:0], in[31:12]};
-			5'd21: out <= {in[10:0], in[31:11]};
-			5'd22: out <= {in[9:0], in[31:10]};
-			5'd23: out <= {in[8:0], in[31:9]};
-			5'd24: out <= {in[7:0], in[31:8]};
-			5'd25: out <= {in[6:0], in[31:7]};
-			5'd26: out <= {in[5:0], in[31:6]};
-			5'd27: out <= {in[4:0], in[31:5]};
-			5'd28: out <= {in[3:0], in[31:4]};
-			5'd29: out <= {in[2:0], in[31:3]};
-			5'd30: out <= {in[1:0], in[31:2]};
-			5'd31: out <= {in[0], in[31:1]};
-			default: out <= in;
+module alu_rol (
+	input wire [31:0] input_data,
+	input wire [4:0] num_rotates, 
+	output reg [31:0] output_data
+);
+
+	always@(*) 
+	begin
+		case(num_rotates)
+			5'b00001 : output_data <= {input_data [30:0], input_data [31]};
+			5'b00010 : output_data <= {input_data [29:0], input_data [31:30]};
+			5'b00011 : output_data <= {input_data [28:0], input_data [31:29]};
+			5'b00100 : output_data <= {input_data [27:0], input_data [31:28]};
+			5'b00101 : output_data <= {input_data [26:0], input_data [31:27]};
+			5'b00110 : output_data <= {input_data [25:0], input_data [31:26]};
+			5'b00111 : output_data <= {input_data [24:0], input_data [31:25]};
+			5'b01000 : output_data <= {input_data [23:0], input_data [31:24]};
+			5'b01001 : output_data <= {input_data [22:0], input_data [31:23]};
+			5'b01010 : output_data <= {input_data [21:0], input_data [31:22]};
+			5'b01011 : output_data <= {input_data [20:0], input_data [31:21]};
+			5'b01100 : output_data <= {input_data [19:0], input_data [31:20]};
+			5'b01101 : output_data <= {input_data [18:0], input_data [31:19]};
+			5'b01110 : output_data <= {input_data [17:0], input_data [31:18]};
+			5'b01111 : output_data <= {input_data [16:0], input_data [31:17]};
+			5'b10000 : output_data <= {input_data [15:0], input_data [31:16]};
+			5'b10001 : output_data <= {input_data [14:0], input_data [31:15]};
+			5'b10010 : output_data <= {input_data [13:0], input_data [31:14]};
+			5'b10011 : output_data <= {input_data [12:0], input_data [31:13]};
+			5'b10100 : output_data <= {input_data [11:0], input_data [31:12]};
+			5'b10101 : output_data <= {input_data [10:0], input_data [31:11]};
+			5'b10110 : output_data <= {input_data [9:0], input_data [31:10]};
+			5'b10111 : output_data <= {input_data [8:0], input_data [31:9]};
+			5'b11000 : output_data <= {input_data [7:0], input_data [31:8]};
+			5'b11001 : output_data <= {input_data [6:0], input_data [31:7]};
+			5'b11010 : output_data <= {input_data [5:0], input_data [31:6]};
+			5'b11011 : output_data <= {input_data [4:0], input_data [31:5]};
+			5'b11100 : output_data <= {input_data [3:0], input_data [31:4]};
+			5'b11101 : output_data <= {input_data [2:0], input_data [31:3]};
+			5'b11110 : output_data <= {input_data [1:0], input_data [31:2]};
+			5'b11111 : output_data <= {input_data [0], input_data [31:1]};
+			default: output_data <= input_data;
 		endcase
 	end   
 endmodule 

@@ -6,11 +6,10 @@ module alu_or (
 );
 	
 	integer i;
-	
 	always@(*)
 	begin
-		for(i = 0; i < 32; i = i + 1) begin
-			C[i] <= A[i] | B[i];
+		for(i = 0; i < 32; i = i + 1) begin : loop
+			assign C[i] = A[i] | B[i];
 		end
 	end
 

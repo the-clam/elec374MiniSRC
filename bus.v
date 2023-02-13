@@ -120,7 +120,7 @@ module bus (
 		else if(MDRout) bus_enc_input <= 32'h00200000;
 		else if(InPortout) bus_enc_input <= 32'h00400000;
 		else if(Cout) bus_enc_input <= 32'h00800000;
-		else bus_enc_input <= 32'h0;
+		else bus_enc_input <= 32'hX;
 	end
 endmodule
 			

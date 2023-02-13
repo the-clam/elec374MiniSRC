@@ -11,7 +11,7 @@ module mux_2_to_1_tb;
 		.mux_sel(mux_sel), 
 		.mux_out(mux_out)
 	);
-	
+		
 	initial
 		begin
 			mux_input_0 <= 32'd15;
