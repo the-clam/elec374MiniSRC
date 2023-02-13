@@ -1,0 +1,78 @@
+`timescale 1 ns/10 ps
+module reg32_tb;
+	reg clock;
+	reg clear;
+	reg enable;
+	reg [31:0] reg_in;
+	wire [31:0] reg_out;
+	
+	reg32 testreg(.clk(clock), .clr(clear), .en(enable), .D(reg_in), .Q(reg_out));
+	
+	initial
+		begin
+			clock <= 0;
+			// clock cycle 1 - 0ns
+				// should have reg_out output 0
+				reg_in <= 32'h0001;
+				enable <= 0;
+				clear <= 0;
+			#25;
+			clock <= 1;
+			#25;
+			clock <= 0;
+			// clock cycle 2 - 50ns
+				// should have reg_out output 1
+				reg_in <= 32'h0001;
+				enable <= 1;
+				clear <= 0;
+			#25;
+			clock <= 1;
+			#25;
+			clock <= 0;
+			// clock cycle 3 - 100ns
+				// should have reg_out output 0
+				reg_in <= 32'h0001;
+				enable <= 1;
+				clear <= 1;
+			#25;
+			clock <= 1;
+			#25;
+			clock <= 0;
+			// clock cycle 4 - 150ns
+				// should have reg_out output 10
+				reg_in <= 32'h0010;
+				enable <= 1;
+				clear <= 0;
+			#25;
+			clock <= 1;
+			#25;
+			clock <= 0;
+			// clock cycle 5 - 200ns
+				// should have reg_out output 10
+				reg_in <= 32'h0100;
+				enable <= 0;
+				clear <= 0;
+			#25;
+			clock <= 1;
+			#25;
+			clock <= 0;
+			// clock cycle 6 - 250ns
+				// should have reg_out output 100
+				enable <= 1;
+				clear <= 0;
+			#25;
+			clock <= 1;
+			#25;
+			clock <= 0;
+			// clock cycle 7 - 200ns
+				// should have reg_out output 0
+				reg_in <= 32'h0100;
+				enable <= 0;
+				clear <= 1;
+			#25;
+			clock <= 1;
+			#25;
+			clock <= 0;				
+		end	
+endmodule
+
