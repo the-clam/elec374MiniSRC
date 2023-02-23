@@ -4,6 +4,7 @@ module alu_sh_tb;
     reg [31:0] num_shifts;
     wire [31:0] shl_output;
     wire [31:0] shr_output;
+	 wire [31:0] shra_output;
     
     alu_shl alu_shl_instance(
         .data_input(sh_input),
@@ -16,11 +17,17 @@ module alu_sh_tb;
         .num_shifts(num_shifts),
         .data_output(shr_output)
     );
+	 
+	 alu_shra alu_shra_instance(
+        .data_input(sh_input),
+        .num_shifts(num_shifts),
+        .data_output(shra_output)
+    );
 
     initial
 		begin
         
-        sh_input <= 32'b11;
+        sh_input <= 32'h80000003;
 
       num_shifts <= 32'b00000;
 		#10;

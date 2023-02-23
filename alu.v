@@ -9,10 +9,10 @@ module alu(
 
     // Wires to carry data out from ALU modules.
     wire [31:0] add_out, and_out, neg_out, not_out, or_out, rol_out, ror_out, shl_out, shr_out, shra_out, sub_out; // IncPC_out
-    wire [63:0] mul_out, div_out
+    wire [63:0] mul_out, div_out;
     wire add_cout, sub_cout;
     // Initialize ALU modules.
-    alu_add add_instance(.A(Y_in), .B(B_in), .C_in(1'b0), .S(add_out) .C_out(add_cout));
+    alu_add add_instance(.A(Y_in), .B(B_in), .C_in(1'b0), .S(add_out), .C_out(add_cout));
     alu_and and_instance(.A(Y_in), .B(B_in), .C(and_out));
     // alu_div div_instance();
     // alu_mul mul_instance();
@@ -24,7 +24,7 @@ module alu(
     alu_shl shl_instance(.input_data(Y_in), .num_shifts(B_in), .data_output(shl_out));
     alu_shr shr_instance(.input_data(Y_in), .num_shifts(B_in), .data_output(shr_out));
     // alu_shra shra_instance();
-    alu_sub sub_instance(.A(Y_in), .B(B_in), .C_in(1'b0), .S(sub_out) .C_out(sub_cout));
+    alu_sub sub_instance(.A(Y_in), .B(B_in), .C_in(1'b0), .S(sub_out), .C_out(sub_cout));
     // PC Increment
 
 
