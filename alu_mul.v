@@ -6,6 +6,7 @@ module alu_mul(
 );
 
 	reg [2:0] bit_pair; // Hold booth re-coded bit pair.
+	reg [32:0] multiplied; // Hold multiplicand multiplied by bit pair. 
 	reg [63:0] shifted; // Hold shifted product.
 	reg [63:0] sum; // Hold final product.
 
@@ -28,12 +29,13 @@ module alu_mul(
 
 			// Based on this bit pair, calculate the value to multiply by.
 			case(bit_pair)
-				3'b001, 3'b010 : shifted = $signed({A[31], A}); // 1 - copy the multiplicand, sign extend by 1 bit
-				3'b101, 3'b110 : shifted = $signed({negated[31], negated});// -1 invert multiplicand, sign extend by 1 bit
-				3'b011 : shifted = $signed({A, 1'b0}); // 2 shift left 1 by appending 0
-				3'b100 : shifted = $signed({negated, 1'b0}); // -2 shift left 1 by appending 0
-				default : shifted = $signed(32'b0); // 3'b000, 3'b111 : 0
+				3'b001, 3'b010 : multiplied = {A[31], A}; // 1 - copy the multiplicand, sign extend by 1 bit
+				3'b101, 3'b110 : multiplied = {negated[31], negated};// -1 invert multiplicand, sign extend by 1 bit
+				3'b011 : multiplied = {A, 1'b0}; // 2 shift left 1 by appending 0
+				3'b100 : multiplied = {negated, 1'b0}; // -2 shift left 1 by appending 0
+				default : multiplied = {32'b0}; // 3'b000, 3'b111 : 0
 			endcase
+			shifted = $signed(multiplied);
 
 			// Shift partial product to be added to the final product sum.
 			// ie. for partial product @ bit 2, shift 2 bits over
@@ -43,7 +45,7 @@ module alu_mul(
 			end
 			
 			// Add shifted partial product to the final sum.
-			sum = sum + shifted; 
+			sum = sum + shifted;
 		end
 	end
 	// Return sum of all partial products as the product.

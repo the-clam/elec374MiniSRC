@@ -10,17 +10,17 @@ module alu_mul_tb;
 	
 	initial
 		begin
-			A <= 32'd10;
-			B <= 32'd13;
+			A <= 32'hFFFFFFFE;
+			B <= 32'hFFFFFFEC;
 			#10;
-			A <= 32'd9999;
-			B <= 32'd1;
+			A <= 32'hF0;
+			B <= 32'hFFFFFFDF;
 			#10;
-			A <= 32'hFFFFFFF6;
-			B <= 32'h10;
+			A <= 32'hFFFFFE5C;
+			B <= 32'h14;
 			#10;
-			A <= 32'hFFFFFFF6;
-			B <= 32'hFFFFFFF6;
+			A <= 32'h100000;
+			B <= 32'h200;
 			#10;
 			
 			
