@@ -6,15 +6,15 @@ module alu_ro_tb;
    wire [31:0] ror_output;
 	
 	alu_rol alu_rol_instance(
-		.input_data(ro_input),
+		.data_input(ro_input),
 		.num_rotates(num_rotates),
-		.output_data(rol_output)
+		.data_output(rol_output)
 	);
 	
 	alu_ror alu_ror_instance(
-		.input_data(ro_input),
+		.data_input(ro_input),
 		.num_rotates(num_rotates),
-		.output_data(ror_output)		
+		.data_output(ror_output)		
 	);
 
 	initial

@@ -1,18 +1,18 @@
 module alu_shra (
-	input wire [31:0] input_data,
+	input wire [31:0] data_input,
 	input wire [31:0] num_shifts,
-	output wire [31:0] output_data
+	output wire [31:0] data_output
 );
-	wire msb = input_data[31];
-	wire [31:0] shifted <= input_data >> num_shifts;
-	assign output_data [31:0] = 
+	wire msb = data_input[31];
+	wire [31:0] shifted <= data_input >> num_shifts;
+	assign data_output [31:0] = 
 	
-	always@(input_data)
+	always@(data_input)
 	begin
 		variable i;
       for(i = 31; i > num_shifts; i = i - 1)
       begin
-            output_data[i] = msb;
+            data_output[i] = msb;
 		end
    end
 

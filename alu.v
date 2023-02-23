@@ -16,13 +16,13 @@ module alu(
     alu_and and_instance(.A(Y_in), .B(B_in), .C(and_out));
     // alu_div div_instance();
     // alu_mul mul_instance();
-    alu_neg neg_instance(.input_data(B_in), .output_data(neg_out));
-    alu_not not_instance(.input_data(B_in), .output_data(not_out));
+    alu_neg neg_instance(.input_data(B_in), .data_output(neg_out));
+    alu_not not_instance(.input_data(B_in), .data_output(not_out));
     alu_or 	or_instance(.A(Y_in), .B(B_in), .C(or_out));
-    alu_rol rol_instance(.input_data(Y_in), .num_rotates(B_in), .output_data(rol_out));
-    alu_ror ror_instance(.input_data(Y_in), .num_rotates(B_in), .output_data(ror_out));
-    alu_shl shl_instance(.input_data(Y_in), .num_shifts(B_in), .output_data(shl_out));
-    alu_shr shr_instance(.input_data(Y_in), .num_shifts(B_in), .output_data(shr_out));
+    alu_rol rol_instance(.input_data(Y_in), .num_rotates(B_in), .data_output(rol_out));
+    alu_ror ror_instance(.input_data(Y_in), .num_rotates(B_in), .data_output(ror_out));
+    alu_shl shl_instance(.input_data(Y_in), .num_shifts(B_in), .data_output(shl_out));
+    alu_shr shr_instance(.input_data(Y_in), .num_shifts(B_in), .data_output(shr_out));
     // alu_shra shra_instance();
     alu_sub sub_instance(.A(Y_in), .B(B_in), .C_in(1'b0), .S(sub_out) .C_out(sub_cout));
     // PC Increment
