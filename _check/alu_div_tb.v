@@ -57,11 +57,6 @@ module alu_div_tb;
 			B <= 32'hECDF8033;
 			#10;
 			A <= 32'hF2269F49;
-			B <= 32'hFFFFFEDB;
-		
-			
-			
-						
+			B <= 32'hFFFFFEDB;	
 		end
-	
 endmodule

@@ -1,10 +1,11 @@
-`timescale 1 ns/10 ps
+`timescale 1 ns / 10 ps
 module alu(
 	input wire [4:0] instruction,
-   input wire [31:0] A_in,
    input wire [31:0] B_in,
    input wire [31:0] Y_in,
-   output reg [63:0] C_result
+   output reg [63:0] C_result,
+	output wire [31:0] Z_hi,
+	output wire [31:0] Z_lo
 );
 
    // Wires to carry data out from ALU modules.
@@ -115,4 +116,6 @@ module alu(
 				end
 		endcase
 	end
+	assign Z_hi = C_result[63:32];
+	assign Z_lo = C_result[31:0];
 endmodule

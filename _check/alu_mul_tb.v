@@ -35,8 +35,5 @@ module alu_mul_tb;
 			A <= 32'hFFED13C4;
 			B <= 32'hFFFFD0BA;
 			#10;
-			
-			
 		end
-	
 endmodule
