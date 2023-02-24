@@ -3,7 +3,6 @@ module alu(
 	input wire [4:0] instruction,
    input wire [31:0] B_in,
    input wire [31:0] Y_in,
-   output reg [63:0] C_result,
 	output wire [31:0] Z_hi,
 	output wire [31:0] Z_lo
 );
@@ -12,7 +11,8 @@ module alu(
    wire [31:0] add_out, and_out, neg_out, not_out, or_out, rol_out, ror_out, shl_out, shr_out, shra_out, sub_out;
    wire [63:0] mul_out, div_out;
    wire add_cout, sub_cout;
-	
+   reg [63:0] C_result;
+
    // Initialize ALU modules.
    alu_add add_instance(.A(Y_in), .B(B_in), .C_in(1'b0), .S(add_out), .C_out(add_cout));
    alu_and and_instance(.A(Y_in), .B(B_in), .C(and_out));

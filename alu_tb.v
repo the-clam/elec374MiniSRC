@@ -3,7 +3,6 @@ module alu_tb;
    reg [4:0] instruction;
    reg [31:0] B_in;
    reg [31:0] Y_in;
-   wire [63:0] C_result;
 	wire [31:0] Z_hi;
 	wire [31:0] Z_lo;
 
@@ -11,7 +10,6 @@ module alu_tb;
 		.instruction(instruction),
 		.B_in(B_in),
 		.Y_in(Y_in),
-		.C_result(C_result),
 		.Z_hi(Z_hi),
 		.Z_lo(Z_lo)
    );
