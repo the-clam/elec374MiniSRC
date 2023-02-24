@@ -42,7 +42,6 @@ module alu_div_tb;
 			B <= 32'h14;
 			#10;
 			A <= 32'h144EA4EA;
-			
 			B <= 32'hFFFFFF38;
 			#10;
 			A <= 32'hC470AC0;
