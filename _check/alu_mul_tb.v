@@ -2,7 +2,7 @@
 module alu_mul_tb;
 	reg [31:0] A;
 	reg [31:0] B;
-	wire [31:0] P;
+	wire [63:0] P;
 	
 	alu_mul alu_mul_instance(
 		.A(A), .B(B), .P(P)
