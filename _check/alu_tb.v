@@ -2,22 +2,22 @@
 module alu_tb;
    reg [4:0] instruction;
    reg [31:0] B_in;
-   reg [31:0] Y_in;
+   reg [31:0] A_in;
 	wire [31:0] Z_hi;
 	wire [31:0] Z_lo;
 
    alu alu_instance(
 		.instruction(instruction),
 		.B_in(B_in),
-		.Y_in(Y_in),
-		.Z_hi(Z_hi),
-		.Z_lo(Z_lo)
+		.A_in(A_in),
+		.Z_high(Z_hi),
+		.Z_low(Z_lo)
    );
 
    initial
         begin
             
-            Y_in = 32'd240;
+            A_in = 32'd240;
             B_in = 32'd3;
             #10;
             instruction = 5'b00011; // add 241 + 3

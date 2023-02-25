@@ -9,13 +9,13 @@ module reg32_mdr_tb;
 	wire [31:0] MDR_out;
 
 	reg32_mdr reg32_mdr_instance(
-		.BusMuxOut(BusMuxOut),
-		.Mdatain(Mdatain),
-		.read(read),
-		.clear(clear),
-		.clock(clock),
-		.MDRin(MDRin),
-		.MDR_out(MDR_out)
+		.MDMuxIn0(BusMuxOut),
+		.MDMuxIn1(Mdatain),
+		.MDMux_sel(read),
+		.clr(clear),
+		.clk(clock),
+		.en(MDRin),
+		.Q(MDR_out)
 	);
 	
 	initial
