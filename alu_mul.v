@@ -13,15 +13,15 @@ module alu_mul(
 	integer bits; // used to loop thru all 32 bits
 	integer shifts; // count number of bits to shift each partial product by
 	
-	// Retain a copy of the negated multiplicand for use with Booth's algorithm.
+	// Retain copy of the negated multiplicand for use with Booth's algorithm.
 	wire [31:0] negated;
-	alu_neg alu_neg_instance(.data_input(A), .data_output(negated)); // Use negation to implement.
+	alu_neg alu_neg_instance(.data_input(A), .data_output(negated));
 
 	always @ (*)
 	begin
 		sum = 64'b0; // Clear sum for next input.
 				
-		for(bits = 0; bits < 32; bits = bits + 2) // Do 16 times (every other bit).
+		for(bits = 0; bits < 32; bits = bits + 2) // Do for every other bit.
 		begin		
 			// Calculate bit pair for bit i.
 			if (bits == 0) bit_pair = {B[bits + 1], B[bits], 1'b0};
@@ -29,10 +29,10 @@ module alu_mul(
 
 			// Based on this bit pair, calculate the value to multiply by.
 			case(bit_pair)
-				3'b001, 3'b010 : multiplied = {A[31], A}; // 1 - copy the multiplicand, sign extend by 1 bit
-				3'b101, 3'b110 : multiplied = {negated[31], negated};// -1 invert multiplicand, sign extend by 1 bit
-				3'b011 : multiplied = {A, 1'b0}; // 2 shift left 1 by appending 0
-				3'b100 : multiplied = {negated, 1'b0}; // -2 shift left 1 by appending 0
+				3'b001, 3'b010 : multiplied = {A[31], A}; // *1
+				3'b101, 3'b110 : multiplied = {negated[31], negated};// *-1
+				3'b011 : multiplied = {A, 1'b0}; // *2
+				3'b100 : multiplied = {negated, 1'b0}; // *-2
 				default : multiplied = {32'b0}; // 3'b000, 3'b111 : 0
 			endcase
 			shifted = $signed(multiplied);

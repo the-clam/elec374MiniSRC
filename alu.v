@@ -8,7 +8,8 @@ module alu(
 );
 
    // Wires to carry data out from ALU modules.
-   wire [31:0] add_out, and_out, neg_out, not_out, or_out, rol_out, ror_out, shl_out, shr_out, shra_out, sub_out;
+   wire [31:0] add_out, and_out, neg_out, not_out, or_out, rol_out, ror_out, shl_out, shr_out,
+   		shra_out, sub_out;
    wire [63:0] mul_out, div_out;
    wire add_cout, sub_cout;
    reg [63:0] C_result;

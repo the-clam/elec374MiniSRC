@@ -16,8 +16,11 @@ module cla_4_bits(
 	assign carry[0] = C_in;
 	assign carry[1] = gen[0] | (prop[0] & carry[0]);
 	assign carry[2] = gen[1] | (prop[1] & gen[0]) | (prop[1] & prop[0] & carry[0]);
-	assign carry[3] = gen[2] | (prop[2] & gen[1]) | (prop[2] & prop[1] & gen[0]) | (prop[2] & prop[1] & prop[0] & carry[0]);
-	assign C_out = gen[3] | (prop[3] & gen[2]) | (prop[3] & prop[2] & gen[1]) | (prop[3] & prop[2] & prop[1] & gen[0]) | (prop[3] & prop[2] & prop[1] & prop[0] & carry[0]);
+	assign carry[3] = gen[2] | (prop[2] & gen[1]) | (prop[2] & prop[1] & gen[0])
+						| (prop[2] & prop[1] & prop[0] & carry[0]);
+	assign C_out = gen[3] | (prop[3] & gen[2]) | (prop[3] & prop[2] & gen[1]) 
+						| (prop[3] & prop[2] & prop[1] & gen[0])
+						| (prop[3] & prop[2] & prop[1] & prop[0] & carry[0]);
 	
 	assign S = prop ^ carry;
 	

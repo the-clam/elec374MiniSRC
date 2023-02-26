@@ -9,6 +9,6 @@ module alu_sub(
 	// do A - B = A + (-B) -> 2's complement on B
 	wire [31:0] two_comp;
 	alu_neg alu_neg_instance(.data_input(B), .data_output(two_comp));
-	alu_add alu_add_instance(.A(A), .B(two_comp), .C_in(0), .S(S), .C_out(C_out));
+    alu_add alu_add_instance(.A(A), .B(two_comp), .C_in(0), .S(S), .C_out(C_out));
 
 endmodule

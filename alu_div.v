@@ -7,9 +7,9 @@ module alu_div(
 );
 
 	reg [32:0] A_reg; // should be all 0s to start, will hold remainder
-	reg [31:0] Q_reg; // originally hold the dividend, will eventually hold the quotient
+	reg [31:0] Q_reg; // originally hold the dividend, will hold the quotient
 	reg [32:0] M_reg; // hold positive divisor
-	reg needs_complement; // whether the quotient needs to be 2's complemented to get correct answer
+	reg needs_complement; // if either A or B are negative
 	
 	integer i;
 
@@ -52,7 +52,7 @@ module alu_div(
 				
 		// 2's complement answer to get negative quotient if needed. 
 		if(needs_complement) Q_reg = ~Q_reg + 1;
-		// If remainder is less than 0, add divisor to get proper remainder value.
+		// If remainder < 0, add divisor to get proper remainder value.
 		if(A_reg[32] == 1) A_reg = A_reg + M_reg;
 	end
 	

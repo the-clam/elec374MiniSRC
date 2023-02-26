@@ -2,38 +2,20 @@
 module datapath_shr_tb;
     // Register Data
     wire [31:0] Bus_Data_tb;
-    wire [31:0] R1_Data_tb;
-    wire [31:0] R3_Data_tb;
-    wire [31:0] R5_Data_tb;
-    wire [31:0] PC_Data_tb;
-    wire [31:0] MAR_Data_tb;
-    wire [31:0] MDR_Data_tb;
-    wire [31:0] Zhigh_Data_tb;
-    wire [31:0] Zlow_Data_tb;
-    wire [31:0] IR_Data_tb;
-    wire [31:0] Y_Data_tb;
+    wire [31:0] R1_Data_tb, R3_Data_tb, R5_Data_tb;
+    wire [31:0] PC_Data_tb, IR_Data_tb;
+    wire [31:0] MAR_Data_tb, MDR_Data_tb;
+    wire [31:0] Y_Data_tb, Zhigh_Data_tb, Zlow_Data_tb;
             
     // CPU Signals
     reg clk = 0;
     reg clr = 0;
     
     // Testbench signals.
-    reg R1_in_tb;
-    reg R3_in_tb;
-    reg R3_out_tb;
-    reg R5_in_tb;
-    reg R5_out_tb;
-    reg PC_in_tb;
-    reg PC_out_tb;
-    reg MAR_in_tb;
-    reg MDR_in_tb;
-    reg MDR_out_tb;
-    reg Z_in_tb;
-    reg Zlow_out_tb;
-    reg IR_in_tb;
-    reg Y_in_tb;
-    reg Read_tb;
-    // reg IncPC_tb; // needed?
+    reg R1_in_tb, R3_in_tb, R3_out_tb, R5_in_tb, R5_out_tb;
+    reg PC_in_tb, PC_out_tb, IR_in_tb;
+    reg MAR_in_tb, Read_tb, MDR_in_tb, MDR_out_tb;
+    reg Y_in_tb, Z_in_tb, Zlow_out_tb;
     reg [4:0] instruction_bits_tb;
     reg [31:0] Mdatain_tb;
 
@@ -45,43 +27,28 @@ module datapath_shr_tb;
 datapath DUT(
     // Register Data
     .Bus_Data(Bus_Data_tb),
-    .R1_Data(R1_Data_tb),
-    .R3_Data(R3_Data_tb),
-    .R5_Data(R5_Data_tb),
-    .PC_Data(PC_Data_tb),
-    .MAR_Data(MAR_Data_tb),
-    .MDR_Data(MDR_Data_tb),
-    .Zhigh_Data(Zhigh_Data_tb),
-    .Zlow_Data(Zlow_Data_tb),
-    .IR_Data(IR_Data_tb),
-    .Y_Data(Y_Data_tb),
-
+    .R1_Data(R1_Data_tb), .R3_Data(R3_Data_tb), .R5_Data(R5_Data_tb),
+    .PC_Data(PC_Data_tb), .IR_Data(IR_Data_tb),
+    .MAR_Data(MAR_Data_tb), .MDR_Data(MDR_Data_tb),
+    .Y_Data(Y_Data_tb), .Zhigh_Data(Zhigh_Data_tb), .Zlow_Data(Zlow_Data_tb),
+    
     // CPU Signals
-    .clk(clk),
-    .clr(clr),
+    .clk(clk), .clr(clr),
 
     // Subset of register input signals.
-    .R1_in(R1_in_tb),
-    .R3_in(R3_in_tb),
-    .R5_in(R5_in_tb),
-    .PC_in(PC_in_tb),
-    .IR_in(IR_in_tb),
-    .Z_in(Z_in_tb),
-    .Y_in(Y_in_tb),
-    .MAR_in(MAR_in_tb),
-    .MDR_in(MDR_in_tb),
-    .Read(Read_tb),
+    .R1_in(R1_in_tb), .R3_in(R3_in_tb), .R5_in(R5_in_tb),
+    .PC_in(PC_in_tb), .IR_in(IR_in_tb),
+    .Y_in(Y_in_tb), .Z_in(Z_in_tb),
+    .MAR_in(MAR_in_tb), .MDR_in(MDR_in_tb), .Read(Read_tb),
 
     // Subset of Bus select controls
-    .R3_out(R3_out_tb),
-    .R5_out(R5_out_tb),
+    .R3_out(R3_out_tb), .R5_out(R5_out_tb),
     .PC_out(PC_out_tb),
     .Zlow_out(Zlow_out_tb),
     .MDR_out(MDR_out_tb),
 
     // Data Signals
-    .alu_instruction(instruction_bits_tb),
-    .Mdatain(Mdatain_tb)
+    .alu_instruction(instruction_bits_tb), .Mdatain(Mdatain_tb)
 );
 
 initial
@@ -175,7 +142,7 @@ begin
                 #10 R3_out_tb <= 1; Y_in_tb <= 1;
                 #15 R3_out_tb <= 0; Y_in_tb <= 0;
             end
-        T4: // Move contents of R5 (0xA) into ALU, select appropriate ALU operation based on opcode, store
+        T4: // Move contents of R5 (0xA) into ALU, select appropriate ALU operation, store
             // answer into Z register (expected answer: 0x8000FA92 SHR 0xA = 0x20003E)
             // (in binary: 00000000001000000000000000111110)
             begin

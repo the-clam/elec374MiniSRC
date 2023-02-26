@@ -1,97 +1,36 @@
 `timescale 1ns / 10ps
 module bus (
 	// select signals
-   input wire R0out,
-   input wire R1out,
-   input wire R2out,
-   input wire R3out,
-   input wire R4out,
-   input wire R5out,
-   input wire R6out,
-   input wire R7out,
-   input wire R8out,
-   input wire R9out,
-   input wire R10out,
-   input wire R11out,
-   input wire R12out,
-   input wire R13out,
-   input wire R14out,
-   input wire R15out,
-   input wire HIout,
-   input wire LOout,
-   input wire Zhighout,
-   input wire Zlowout,
-   input wire PCout,
-   input wire MDRout,
-   input wire InPortout,
-   input wire Cout,
-   // 32 bit input to 32-to-1 mux
-	input wire [31:0] BusMuxIn_R0,
-	input wire [31:0] BusMuxIn_R1,
-	input wire [31:0] BusMuxIn_R2,
-	input wire [31:0] BusMuxIn_R3,
-	input wire [31:0] BusMuxIn_R4,
-	input wire [31:0] BusMuxIn_R5,
-	input wire [31:0] BusMuxIn_R6,
-	input wire [31:0] BusMuxIn_R7,
-	input wire [31:0] BusMuxIn_R8,
-	input wire [31:0] BusMuxIn_R9,
-	input wire [31:0] BusMuxIn_R10,
-	input wire [31:0] BusMuxIn_R11,
-	input wire [31:0] BusMuxIn_R12,
-	input wire [31:0] BusMuxIn_R13,
-	input wire [31:0] BusMuxIn_R14,
-	input wire [31:0] BusMuxIn_R15,
-	input wire [31:0] BusMuxIn_HI,
-	input wire [31:0] BusMuxIn_LO,
-	input wire [31:0] BusMuxIn_Zhigh,
-	input wire [31:0] BusMuxIn_Zlow,
-	input wire [31:0] BusMuxIn_PC,
-	input wire [31:0] BusMuxIn_MDR,
-	input wire [31:0] BusMuxIn_InPort,
-	input wire [31:0] C_sign_extended,
+	input wire R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out,
+	input wire R9out, R10out, R11out, R12out, R13out, R14out, R15out,
+	input wire HIout, LOout, Zhighout, Zlowout, PCout, MDRout, InPortout, Cout,
+	// 32 bit input to 32-to-1 mux
+	input wire [31:0] BusMuxIn_R0, BusMuxIn_R1, BusMuxIn_R2, BusMuxIn_R3, BusMuxIn_R4, BusMuxIn_R5,
+	input wire [31:0] BusMuxIn_R6, BusMuxIn_R7, BusMuxIn_R8, BusMuxIn_R9, BusMuxIn_R10,
+	input wire [31:0] BusMuxIn_R11, BusMuxIn_R12, BusMuxIn_R13, BusMuxIn_R14, BusMuxIn_R15,
+	input wire [31:0] BusMuxIn_HI, BusMuxIn_LO, BusMuxIn_Zhigh, BusMuxIn_Zlow,
+	input wire [31:0] BusMuxIn_PC, BusMuxIn_MDR, BusMuxIn_InPort, C_sign_extended,
 	// bus output
 	output wire [31:0] BusMuxOut	
 );
 
-	// intermediate input to 32-to-5 encoder, will be assigned based on which signal selected
-   reg [31:0] bus_enc_input;
-   // intermediate output from 32-to-5 encoder, to be put into 32-to-1 mux
-   wire [4:0] bus_enc_output;
+	// input to 32-to-5 encoder, output is based on input select signal
+	reg [31:0] bus_enc_input;
+   	// intermediate output from 32-to-5 encoder, to be put into 32-to-1 mux
+   	wire [4:0] bus_enc_output;
    
-
-   enc_32_to_5 bus_encoder(
-		.enc_input(bus_enc_input),
-		.enc_output(bus_enc_output)
-	);
+   	enc_32_to_5 bus_encoder(.enc_input(bus_enc_input), .enc_output(bus_enc_output));
 	 
 	mux_32_to_1 bus_mux(
-		.mux_sel(bus_enc_output),
-        .mux_input_0(BusMuxIn_R0),
-        .mux_input_1(BusMuxIn_R1),
-        .mux_input_2(BusMuxIn_R2),
-        .mux_input_3(BusMuxIn_R3),
-        .mux_input_4(BusMuxIn_R4),
-        .mux_input_5(BusMuxIn_R5),
-        .mux_input_6(BusMuxIn_R6),
-        .mux_input_7(BusMuxIn_R7),
-        .mux_input_8(BusMuxIn_R8),
-        .mux_input_9(BusMuxIn_R9),
-        .mux_input_10(BusMuxIn_R10),
-        .mux_input_11(BusMuxIn_R11),
-        .mux_input_12(BusMuxIn_R12),
-        .mux_input_13(BusMuxIn_R13),
-        .mux_input_14(BusMuxIn_R14),
-        .mux_input_15(BusMuxIn_R15),
-        .mux_input_16(BusMuxIn_HI),
-        .mux_input_17(BusMuxIn_LO),
-        .mux_input_18(BusMuxIn_Zhigh),
-        .mux_input_19(BusMuxIn_Zlow),
-        .mux_input_20(BusMuxIn_PC),
-        .mux_input_21(BusMuxIn_MDR),
-        .mux_input_22(BusMuxIn_InPort),
-        .mux_input_23(C_sign_extended),
-        .mux_out(BusMuxOut)
+		.mux_sel(bus_enc_output), .mux_input_0(BusMuxIn_R0), .mux_input_1(BusMuxIn_R1),
+		.mux_input_2(BusMuxIn_R2), .mux_input_3(BusMuxIn_R3), .mux_input_4(BusMuxIn_R4),
+		.mux_input_5(BusMuxIn_R5), .mux_input_6(BusMuxIn_R6), .mux_input_7(BusMuxIn_R7),
+		.mux_input_8(BusMuxIn_R8), .mux_input_9(BusMuxIn_R9), .mux_input_10(BusMuxIn_R10),
+		.mux_input_11(BusMuxIn_R11), .mux_input_12(BusMuxIn_R12), .mux_input_13(BusMuxIn_R13),
+		.mux_input_14(BusMuxIn_R14), .mux_input_15(BusMuxIn_R15), .mux_input_16(BusMuxIn_HI),
+		.mux_input_17(BusMuxIn_LO), .mux_input_18(BusMuxIn_Zhigh), .mux_input_19(BusMuxIn_Zlow),
+		.mux_input_20(BusMuxIn_PC), .mux_input_21(BusMuxIn_MDR), .mux_input_22(BusMuxIn_InPort), 
+		.mux_input_23(C_sign_extended), .mux_out(BusMuxOut)
 	);
 
 	always@(*)

@@ -5,8 +5,17 @@ module alu_neg (
 );
 	
 	wire [31:0] flipped_bits;
-	alu_not alu_not_instance(.data_input(data_input), .data_output(flipped_bits)); // Flip all bits.
+
+	// Flip all bits.
+	alu_not alu_not_instance(.data_input(data_input), .data_output(flipped_bits));
+
 	wire C_out;
-	alu_add alu_add_instance(.A(flipped_bits), .B(32'b1), .C_in(1'b0), .S(data_output), .C_out(C_out)); // Add one (using carry in).
+	
+	// Add one (using carry in).
+	alu_add alu_add_instance (
+		.A(flipped_bits), .B(32'b1), .C_in(1'b0),
+		.S(data_output),
+		.C_out(C_out)
+	); 
 	
 endmodule
