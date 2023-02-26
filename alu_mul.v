@@ -15,7 +15,7 @@ module alu_mul(
 	
 	// Retain a copy of the negated multiplicand for use with Booth's algorithm.
 	wire [31:0] negated;
-	alu_neg alu_neg_instance(.data_input(A), .data_output(negated)); // Use negation module to implement.
+	alu_neg alu_neg_instance(.data_input(A), .data_output(negated)); // Use negation to implement.
 
 	always @ (*)
 	begin

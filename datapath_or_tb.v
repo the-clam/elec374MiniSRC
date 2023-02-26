@@ -1,5 +1,5 @@
 `timescale 1ns / 10ps
-module datapath_and_tb;
+module datapath_or_tb;
     // Register Data
     wire [31:0] Bus_Data_tb;
     wire [31:0] R1_Data_tb;
@@ -162,7 +162,7 @@ begin
         T1: // Load instruction into MDR.
             begin
                 #10 Zlow_out_tb <= 1; PC_in_tb <= 1; Read_tb <= 1; MDR_in_tb <= 1;
-                Mdatain_tb <= 32'h28918000; // opcode for and R1, R2, R3
+                Mdatain_tb <= 32'h30918000; // opcode for or R1, R2, R3
                 #15 Zlow_out_tb <= 0; PC_in_tb <= 0; Read_tb <= 0; MDR_in_tb <= 0;
             end
         T2: // Move instructions into instruction register.
@@ -175,13 +175,13 @@ begin
                 #10 R2_out_tb <= 1; Y_in_tb <= 1;
                 #15 R2_out_tb <= 0; Y_in_tb <= 0;
             end
-        T4: // Move contents of R3 (0x14) into ALU, select appropriate ALU operation based on opcode,
-            // store answer into Z register (expected answer: 0x12 AND 0x14 = 0x10)
+        T4: // Move contents of R3 (0x14) into ALU, select appropriate ALU operation based on opcode, store
+            // answer into Z register (expected answer: 0x12 OR 0x14 = 0x16)
             begin
                 #10 R3_out_tb <= 1; instruction_bits_tb <= IR_Data_tb[31:27]; Z_in_tb <= 1;
                 #15 R3_out_tb <= 0; instruction_bits_tb <= 5'b0; Z_in_tb <= 0;
             end
-        T5: // Move result from Z register into R1 (0x10).
+        T5: // Move result from Z regsiter into R1 (0x16).
             begin
                 #10 Zlow_out_tb <= 1; R1_in_tb <= 1;
                 #15 Zlow_out_tb <= 0; R1_in_tb <= 0;
