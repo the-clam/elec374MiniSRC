@@ -1,9 +1,9 @@
 `timescale 1ns / 10ps
 module datapath(
-    // Control Signals
-    input wire clk, clr,
-    input wire [4:0] alu_instruction,
-
+    // CPU Signals
+    input clk,
+    input clr,
+    
     // Register Input Controls
     input wire R0_in, R1_in, R2_in, R3_in, R4_in, R5_in, 
     input wire R6_in, R7_in, R8_in, R9_in, R10_in,
@@ -25,6 +25,9 @@ module datapath(
     input wire MDR_out,
     input wire InPort_out,
     input wire C_out,
+
+    // ALU opcode
+    input wire [4:0] alu_instruction,
     
     // Data Signals
     output wire [31:0] Bus_Data, // Current active data in bus.
@@ -64,10 +67,10 @@ reg32 IR_reg (.clr(clr), .clk(clk), .en(IR_in), .D(Bus_Data), .Q(IR_Data));
 reg32 Y_reg (.clr(clr), .clk(clk), .en(Y_in), .D(Bus_Data), .Q(Y_Data));
 reg32 Zhigh_reg (.clr(clr), .clk(clk), .en(Z_in), .D(ALUHigh_Data), .Q(Zhigh_Data));
 reg32 Zlow_reg (.clr(clr), .clk(clk), .en(Z_in), .D(ALULow_Data), .Q(Zlow_Data));
-reg32 MAR_reg (.clr(clr), .clk(clk), .en(MAR_in), .D(Bus_Data), .Q()); // Data to be sent to memory unit eventually, leave output blank because there's no "output" to plug into.
+reg32 MAR_reg (.clr(clr), .clk(clk), .en(MAR_in), .D(Bus_Data), .Q(MAR_Data)); // Data to be sent to memory unit eventually, leave output blank because there's no "output" to plug into.
 reg32 HI_reg (.clr(clr), .clk(clk), .en(HI_in), .D(Bus_Data), .Q(HI_Data));
 reg32 LO_reg (.clr(clr), .clk(clk), .en(LO_in), .D(Bus_Data), .Q(LO_Data));
-reg32_mdr MDR_reg (.clr(clr), .clk(clk), .en(MDR_in), .MDMuxIn0(Bus_Data), .MDMuxIn1(Mdatain), .MDMux_sel(Read), .Q(MAR_Data));
+reg32_mdr MDR_reg (.clr(clr), .clk(clk), .en(MDR_in), .MDMuxIn0(Bus_Data), .MDMuxIn1(Mdatain), .MDMux_sel(Read), .Q(MDR_Data));
 
 /* BUS */
 bus the_bus(

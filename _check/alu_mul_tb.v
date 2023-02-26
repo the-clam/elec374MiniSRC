@@ -22,7 +22,6 @@ module alu_mul_tb;
 			A <= 32'hFFFFFF10;
 			B <= 32'hFFFFFF7B;
 			#10;
-			
 			A <= 32'h7B4DA;
 			B <= 32'h5DEC;
 			#10;
