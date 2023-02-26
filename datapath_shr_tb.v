@@ -176,13 +176,13 @@ begin
                 #15 R3_out_tb <= 0; Y_in_tb <= 0;
             end
         T4: // Move contents of R5 (0xA) into ALU, select appropriate ALU operation based on opcode, store
-            // answer into Z register (expected answer: 0x8000FA92 SHR 0xA = 20003E)
-            // (in binary: 10000000000000001111101010010010 SHR 10 = 00000000001000000000000000111110)
+            // answer into Z register (expected answer: 0x8000FA92 SHR 0xA = 0x20003E)
+            // (in binary: 00000000001000000000000000111110)
             begin
                 #10 R5_out_tb <= 1; instruction_bits_tb <= IR_Data_tb[31:27]; Z_in_tb <= 1;
                 #15 R5_out_tb <= 0; instruction_bits_tb <= 5'b0; Z_in_tb <= 0;
             end
-        T5: // Move result from Z register into R1 (20003E).
+        T5: // Move result from Z register into R1 (0x20003E).
             begin
                 #10 Zlow_out_tb <= 1; R1_in_tb <= 1;
                 #15 Zlow_out_tb <= 0; R1_in_tb <= 0;

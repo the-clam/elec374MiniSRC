@@ -1,16 +1,14 @@
 `timescale 1ns / 10ps
-module datapath_mul_tb;
+module datapath_neg_tb;
     // Register Data
     wire [31:0] Bus_Data_tb;
-    wire [31:0] R6_Data_tb;
-    wire [31:0] R7_Data_tb;
+    wire [31:0] R0_Data_tb;
+    wire [31:0] R1_Data_tb;
     wire [31:0] PC_Data_tb;
     wire [31:0] MAR_Data_tb;
     wire [31:0] MDR_Data_tb;
     wire [31:0] Zhigh_Data_tb;
     wire [31:0] Zlow_Data_tb;
-    wire [31:0] HI_Data_tb;
-    wire [31:0] LO_Data_tb;
     wire [31:0] IR_Data_tb;
     wire [31:0] Y_Data_tb;
             
@@ -19,20 +17,17 @@ module datapath_mul_tb;
     reg clr = 0;
     
     // Testbench signals.
-    reg R6_in_tb;
-    reg R6_out_tb;
-    reg R7_in_tb;
-    reg R7_out_tb;
+    reg R0_in_tb;
+    reg R0_out_tb;
+    reg R1_in_tb;
+    reg R1_out_tb;
     reg PC_in_tb;
     reg PC_out_tb;
     reg MAR_in_tb;
     reg MDR_in_tb;
     reg MDR_out_tb;
     reg Z_in_tb;
-    reg Zhigh_out_tb;
     reg Zlow_out_tb;
-    reg HI_in_tb;
-    reg LO_in_tb;
     reg IR_in_tb;
     reg Y_in_tb;
     reg Read_tb;
@@ -41,22 +36,19 @@ module datapath_mul_tb;
     reg [31:0] Mdatain_tb;
 
     parameter Default = 4'b0000, Reg_load1a = 4'b0001, Reg_load1b = 4'b0010, Reg_load2a = 4'b0011;
-    parameter Reg_load2b = 4'b0100, T0 = 4'b0101, T1 = 4'b0110, T2 = 4'b0111, T3 = 4'b1000;
-    parameter T4 = 4'b1001, T5 = 4'b1010, T6 = 4'b1011;
+    parameter Reg_load2b = 4'b0100, T0 = 4'b0101, T1 = 4'b0110, T2 = 4'b0111, T3 = 4'b1000, T4 = 4'b1001;
     reg [3:0] Present_state = Default;
 
 datapath DUT(
     // Register Data
     .Bus_Data(Bus_Data_tb),
-    .R6_Data(R6_Data_tb),
-    .R7_Data(R7_Data_tb),
+    .R0_Data(R0_Data_tb),
+    .R1_Data(R1_Data_tb),
     .PC_Data(PC_Data_tb),
     .MAR_Data(MAR_Data_tb),
     .MDR_Data(MDR_Data_tb),
     .Zhigh_Data(Zhigh_Data_tb),
     .Zlow_Data(Zlow_Data_tb),
-    .HI_Data(HI_Data_tb),
-    .LO_Data(LO_Data_tb),
     .IR_Data(IR_Data_tb),
     .Y_Data(Y_Data_tb),
 
@@ -65,23 +57,20 @@ datapath DUT(
     .clr(clr),
 
     // Subset of register input signals.
-    .R6_in(R6_in_tb),
-    .R7_in(R7_in_tb),
+    .R0_in(R0_in_tb),
+    .R1_in(R1_in_tb),
     .PC_in(PC_in_tb),
     .IR_in(IR_in_tb),
     .Z_in(Z_in_tb),
     .Y_in(Y_in_tb),
-    .HI_in(HI_in_tb),
-    .LO_in(LO_in_tb),
     .MAR_in(MAR_in_tb),
     .MDR_in(MDR_in_tb),
     .Read(Read_tb),
 
     // Subset of Bus select controls
-    .R6_out(R6_out_tb),
-    .R7_out(R7_out_tb),
+    .R0_out(R0_out_tb),
+    .R1_out(R1_out_tb),
     .PC_out(PC_out_tb),
-    .Zhigh_out(Zhigh_out_tb),
     .Zlow_out(Zlow_out_tb),
     .MDR_out(MDR_out_tb),
 
@@ -108,8 +97,6 @@ begin
 		T1 : #35 Present_state = T2;
 		T2 : #35 Present_state = T3;
 		T3 : #35 Present_state = T4;
-		T4 : #35 Present_state = T5;
-        T5 : #35 Present_state = T6;
 	endcase
 end
 
@@ -119,32 +106,33 @@ begin
         Default: // Initial conditions for all parameters.
             begin
                 Mdatain_tb <= 32'h00000000;
-                R6_in_tb <= 0; R7_in_tb <= 0; R6_out_tb <= 0; R7_out_tb <= 0; PC_in_tb <= 0; PC_out_tb <= 0; 
-                Z_in_tb <= 0; Zhigh_out_tb <= 0; Zlow_out_tb <= 0; HI_in_tb <= 0; LO_in_tb <= 0; MDR_in_tb <= 0; MDR_out_tb <= 0; 
-                MAR_in_tb <= 0; IR_in_tb <= 0; Y_in_tb <= 0; Read_tb <= 0; instruction_bits_tb <= 5'b0;            
+                R0_in_tb <= 0; R1_in_tb <= 0; R0_out_tb <= 0; R1_out_tb <= 0;
+                PC_in_tb <= 0; PC_out_tb <= 0; Z_in_tb <= 0; Zlow_out_tb <= 0; MDR_in_tb <= 0;
+                MDR_out_tb <= 0; MAR_in_tb <= 0; IR_in_tb <= 0; Y_in_tb <= 0; Read_tb <= 0;
+                instruction_bits_tb <= 5'b0;            
             end
-        Reg_load1a: // Load 0x2ECC5 into MDR.
+        Reg_load1a: // Load 0x1234 into MDR.
             begin
-                Mdatain_tb <= 32'h2ECC5;
+                Mdatain_tb <= 32'h1234;
                 Read_tb = 0; MDR_in_tb = 0; 
                 #10 Read_tb <= 1; MDR_in_tb <= 1;
                 #15 Read_tb <= 0; MDR_in_tb <= 0; 
             end
-        Reg_load1b: // Initialize R6 with 0x2CCE5 from MDR.
+        Reg_load1b: // Initialize R0 with 0x1234 from MDR.
             begin
-                #10 MDR_out_tb <= 1; R6_in_tb <= 1;
-                #15 MDR_out_tb <= 0; R6_in_tb <= 0;
+                #10 MDR_out_tb <= 1; R0_in_tb <= 1;
+                #15 MDR_out_tb <= 0; R0_in_tb <= 0;
             end
-        Reg_load2a: // Load 0xFFFDCCE5 into MDR.
+        Reg_load2a: // Load 0xFFFFCFC7 into MDR.
             begin
-                Mdatain_tb <= 32'hFFFDCCE5;
+                Mdatain_tb <= 32'hFFFFCFC7;
                 #10 Read_tb <= 1; MDR_in_tb <= 1;
                 #15 Read_tb <= 0; MDR_in_tb <= 0;
             end
-        Reg_load2b: // Initialize R7 with 0xFFFDCCE5 from MDR.
+        Reg_load2b: // Initialize R1 with 0xFFFFCFC7 from MDR.
             begin
-                #10 MDR_out_tb <= 1; R7_in_tb <= 1;
-                #15 MDR_out_tb <= 0; R7_in_tb <= 0;
+                #10 MDR_out_tb <= 1; R1_in_tb <= 1;
+                #15 MDR_out_tb <= 0; R1_in_tb <= 0;
             end
         T0: // Get program counter, (increment from ALU in later phase),
             // send program counter as instruction address via MAR to memory unit.
@@ -155,7 +143,7 @@ begin
         T1: // Load instruction into MDR.
             begin
                 #10 Zlow_out_tb <= 1; PC_in_tb <= 1; Read_tb <= 1; MDR_in_tb <= 1;
-                Mdatain_tb <= 32'h7B380000; // opcode for mul R6, R7
+                Mdatain_tb <= 32'h88080000; // opcode for neg R0, R1
                 #15 Zlow_out_tb <= 0; PC_in_tb <= 0; Read_tb <= 0; MDR_in_tb <= 0;
             end
         T2: // Move instructions into instruction register.
@@ -163,26 +151,16 @@ begin
                 #10 MDR_out_tb <= 1; IR_in_tb <= 1;
                 #15 MDR_out_tb <= 0; IR_in_tb <= 0;
             end
-        T3: // Move contents of R6 (0x2ECC5) into Y register.
+        T3: // Move contents of R1 (0xFFFFCFC7) into ALU, select appropriate ALU operation based on opcode, store
+            // answer into Z register (expected answer: NEG 0xFFFFCFC7 = 0x3039)
             begin
-                #10 R6_out_tb <= 1; Y_in_tb <= 1;
-                #15 R6_out_tb <= 0; Y_in_tb <= 0;
+                #10 R1_out_tb <= 1; instruction_bits_tb <= IR_Data_tb[31:27]; Z_in_tb <= 1;
+                #15 R1_out_tb <= 0; instruction_bits_tb <= 5'b0; Z_in_tb <= 0;
             end
-        T4: // Move contents of R7 (0xFFFDCCE5) into ALU, select appropriate ALU operation based on opcode, store
-            // answer into Z register (expected answer: 0x2ECC5 MUL 0xFFFDCCE5 = 0xFFFFFFF9_90FBC839)
+        T4: // Move result from Z register into R0 (0x3039).
             begin
-                #10 R7_out_tb <= 1; instruction_bits_tb <= IR_Data_tb[31:27]; Z_in_tb <= 1;
-                #15 R7_out_tb <= 0; instruction_bits_tb <= 5'b0; Z_in_tb <= 0;
-            end
-        T5: // Move bottom 32 bits of result from ALU into LO (0x90FBC839).
-            begin
-                #10 Zlow_out_tb <= 1; LO_in_tb <= 1;
-                #15 Zlow_out_tb <= 0; LO_in_tb <= 0;
-            end
-        T6: // Move top 32 bits of result from Z register into HI (0xFFFFFFF9).
-            begin
-                #10 Zhigh_out_tb <= 1; HI_in_tb <= 1;
-                #15 Zhigh_out_tb <= 0; HI_in_tb <= 0;
+                #10 Zlow_out_tb <= 1; R0_in_tb <= 1;
+                #15 Zlow_out_tb <= 0; R0_in_tb <= 0;
             end
     endcase
 end
