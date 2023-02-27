@@ -3,9 +3,14 @@ module alu_mul_tb;
 	reg [31:0] A;
 	reg [31:0] B;
 	wire [63:0] P;
+	wire [63:0] P_4bit;
 	
 	alu_mul alu_mul_instance(
 		.A(A), .B(B), .P(P)
+	);
+
+	alu_mul_4bit alu_mul_4bit_instance(
+		.A(A), .B(B), .P(P_4bit)
 	);
 	
 	initial
