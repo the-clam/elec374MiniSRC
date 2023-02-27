@@ -38,7 +38,7 @@ module alu_rol (
 			32'b11101 : data_output <= {data_input [2:0], data_input [31:3]};
 			32'b11110 : data_output <= {data_input [1:0], data_input [31:2]};
 			32'b11111 : data_output <= {data_input [0], data_input [31:1]};
-			default: data_output <= data_input;
+			default : data_output <= data_input;
 		endcase
 	end   
 endmodule 
