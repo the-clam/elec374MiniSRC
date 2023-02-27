@@ -1,22 +1,17 @@
 `timescale 1ns / 10ps
 module datapath(
     // CPU Signals
-    input clk,
-    input clr,
-    
+    input clk, clr,
     // Register Input Controls
     input wire R0_in, R1_in, R2_in, R3_in, R4_in, R5_in, R6_in, R7_in, R8_in, R9_in, R10_in,
     input wire R11_in, R12_in, R13_in, R14_in, R15_in,
     input wire PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, Read,
-
     // Bus Select Controls
     input wire R0_out, R1_out, R2_out, R3_out, R4_out, R5_out, R6_out, R7_out, R8_out, R9_out,
     input wire R10_out, R11_out, R12_out, R13_out, R14_out, R15_out,
     input wire PC_out, Zhigh_out, Zlow_out, HI_out, LO_out, MDR_out, InPort_out, C_out,
-
     // ALU opcode
     input wire [4:0] alu_instruction,
-    
     // Data Signals
     output wire [31:0] Bus_Data, // Current active data in bus.
     output wire [31:0] ALUHigh_Data, ALULow_Data, // Data coming out from ALU -> Z regs.
@@ -27,7 +22,6 @@ module datapath(
     output wire [31:0] MAR_Data, MDR_Data, InPort_Data, C_sign_extended_Data,
     input wire [31:0] Mdatain
 );
-
 /* REGISTERS */
 reg32 R0_reg (.clr(clr), .clk(clk), .en(R0_in), .D(Bus_Data), .Q(R0_Data));
 reg32 R1_reg (.clr(clr), .clk(clk), .en(R1_in), .D(Bus_Data), .Q(R1_Data));
@@ -53,14 +47,11 @@ reg32 Zlow_reg (.clr(clr), .clk(clk), .en(Z_in), .D(ALULow_Data), .Q(Zlow_Data))
 reg32 MAR_reg (.clr(clr), .clk(clk), .en(MAR_in), .D(Bus_Data), .Q(MAR_Data));
 reg32 HI_reg (.clr(clr), .clk(clk), .en(HI_in), .D(Bus_Data), .Q(HI_Data));
 reg32 LO_reg (.clr(clr), .clk(clk), .en(LO_in), .D(Bus_Data), .Q(LO_Data));
-
 // MDR Reg
 reg32_mdr MDR_reg (
-    .clr(clr), .clk(clk), .en(MDR_in), 
-    .MDMuxIn0(Bus_Data), .MDMuxIn1(Mdatain), .MDMux_sel(Read),
-    .Q(MDR_Data)
+    .clr(clr), .clk(clk), .en(MDR_in), .MDMuxIn0(Bus_Data), .MDMuxIn1(Mdatain),
+    .MDMux_sel(Read), .Q(MDR_Data)
 );
-
 /* BUS */
 bus the_bus(
     // Out Signals
@@ -80,11 +71,9 @@ bus the_bus(
     // Bus Output 
     .BusMuxOut(Bus_Data)
 );
-
 /* ALU */
 alu the_alu(
     .instruction(alu_instruction), .A_in(Y_Data), .B_in(Bus_Data), 
     .Z_high(ALUHigh_Data), .Z_low(ALULow_Data)
 );
-
 endmodule

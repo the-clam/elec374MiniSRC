@@ -98,13 +98,13 @@ begin
                 #10 MDR_out_tb <= 1; R6_in_tb <= 1;
                 #15 MDR_out_tb <= 0; R6_in_tb <= 0;
             end
-        Reg_load2a: // Load 0x8 into MDR.
+        Reg_load2a: // Load 0x28 into MDR.
             begin
-                Mdatain_tb <= 32'h8;
+                Mdatain_tb <= 32'h28;
                 #10 Read_tb <= 1; MDR_in_tb <= 1;
                 #15 Read_tb <= 0; MDR_in_tb <= 0;
             end
-        Reg_load2b: // Initialize R4 with 0x8 from MDR.
+        Reg_load2b: // Initialize R4 with 0x28 from MDR.
             begin
                 #10 MDR_out_tb <= 1; R4_in_tb <= 1;
                 #15 MDR_out_tb <= 0; R4_in_tb <= 0;
@@ -142,8 +142,8 @@ begin
                 #10 R6_out_tb <= 1; Y_in_tb <= 1;
                 #15 R6_out_tb <= 0; Y_in_tb <= 0;
             end
-        T4: // Move contents of R4 (0xA) into ALU, select appropriate ALU operation, store
-            // answer into Z register (expected answer: 0x8000FA92 ROR 0xA = 0x928000FA)
+        T4: // Move contents of R4 (0x28) into ALU, select appropriate ALU operation, store
+            // answer into Z register (expected answer: 0x8000FA92 ROR 0x28 = 0x928000FA)
             // (in binary: 10010010100000000000000011111010)
             begin
                 #10 R4_out_tb <= 1; instruction_bits_tb <= IR_Data_tb[31:27]; Z_in_tb <= 1;

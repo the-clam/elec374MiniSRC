@@ -2,7 +2,7 @@
 module alu(
 	input wire [4:0] instruction,
 	input wire [31:0] A_in,
-   input wire [31:0] B_in,
+	input wire [31:0] B_in,
 	output wire [31:0] Z_high,
 	output wire [31:0] Z_low
 );
@@ -33,90 +33,58 @@ module alu(
 	always@(*)
    begin
 		case(instruction)
-			5'b00011 : // add
-				begin
-					C_result[31:0] <= add_out[31:0];
-					C_result[63:32] <= 32'd0;
+			5'b00011 : begin // add
+					C_result[31:0] <= add_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			5'b00100 : // sub
-				begin	
-					C_result[31:0] <= sub_out[31:0];
-					C_result[63:32] <= 32'd0;
+			5'b00100 : begin // sub
+					C_result[31:0] <= sub_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			5'b00101 : // and
-				begin
-					C_result[31:0] <= and_out[31:0];
-					C_result[63:32] <= 32'd0;
-            end
-			5'b00110 : // or
-				begin
-					C_result[31:0] <= or_out[31:0];
-               C_result[63:32] <= 32'd0;
+			5'b00101 : begin // and
+					C_result[31:0] <= and_out[31:0]; C_result[63:32] <= 32'd0;
+            	end
+			5'b00110 : begin // or
+					C_result[31:0] <= or_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			5'b00111 : // shr
-				begin 
-					C_result[31:0] <= shr_out[31:0];
-               C_result[63:32] <= 32'd0;
-            end
-			5'b01000 : // shra
-				begin 
-					C_result[31:0] <= shra_out[31:0];
-               C_result[63:32] <= 32'd0;
+			5'b00111 : begin // shr
+					C_result[31:0] <= shr_out[31:0]; C_result[63:32] <= 32'd0;
+            	end
+			5'b01000 : begin // shra
+					C_result[31:0] <= shra_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			5'b01001 : // shl
-				begin 
-					C_result[31:0] <= shl_out[31:0];
-               C_result[63:32] <= 32'd0;
+			5'b01001 : begin // shl
+					C_result[31:0] <= shl_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			5'b01010 : // ror
-				begin 
-					C_result[31:0] <= ror_out[31:0];
-               C_result[63:32] <= 32'd0;
+			5'b01010 : begin // ror
+					C_result[31:0] <= ror_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			5'b01011 : // rol
-				begin 
-					C_result[31:0] <= rol_out[31:0];
-					C_result[63:32] <= 32'd0;
+			5'b01011 : begin // rol 
+					C_result[31:0] <= rol_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			5'b01100 : // addi
-				begin 
-					C_result[31:0] <= add_out[31:0];
-               C_result[63:32] <= 32'd0;
+			5'b01100 : begin // addi 
+					C_result[31:0] <= add_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			5'b01101 : // andi
-				begin 
-					C_result[31:0] <= and_out[31:0];
-               C_result[63:32] <= 32'd0;
+			5'b01101 : begin // andi
+					C_result[31:0] <= and_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			5'b01110 : // ori
-				begin 
-					C_result[31:0] <= or_out[31:0];
-               C_result[63:32] <= 32'd0;
+			5'b01110 : begin // ori
+					C_result[31:0] <= or_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			5'b01111 : // mul
-				begin 
-					C_result[63:0] <= mul_out[63:0];
+			5'b01111 : begin // mul
+					C_result[63:0] <= mul_out[63:0]; 
 				end
-			5'b10000 : // div
-				begin 
+			5'b10000 : begin // div 
 					C_result[63:0] <= div_out[63:0];
 				end
-			5'b10001 : // neg
-				begin
-					C_result[31:0] <= neg_out[31:0];
-					C_result[63:32] <= 32'd0;
+			5'b10001 : begin // neg
+					C_result[31:0] <= neg_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			5'b10010 : // not 
-				begin
-					C_result[31:0] <= not_out[31:0];
-					C_result[63:32] <= 32'd0;
+			5'b10010 : begin // not 
+					C_result[31:0] <= not_out[31:0]; C_result[63:32] <= 32'd0;
 				end
-			default :
-				begin
+			default : begin
 					C_result [63:0] <= 64'd0;
 				end
 		endcase
 	end
-	assign Z_high = C_result[63:32];
-	assign Z_low = C_result[31:0];
+	assign Z_high = C_result[63:32]; assign Z_low = C_result[31:0];
 endmodule

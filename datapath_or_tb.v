@@ -148,7 +148,7 @@ begin
                 #10 R3_out_tb <= 1; instruction_bits_tb <= IR_Data_tb[31:27]; Z_in_tb <= 1;
                 #15 R3_out_tb <= 0; instruction_bits_tb <= 5'b0; Z_in_tb <= 0;
             end
-        T5: // Move result from Z regsiter into R1 (0x16).
+        T5: // Move result from Z register into R1 (0x16).
             begin
                 #10 Zlow_out_tb <= 1; R1_in_tb <= 1;
                 #15 Zlow_out_tb <= 0; R1_in_tb <= 0;
