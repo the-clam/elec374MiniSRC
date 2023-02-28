@@ -1,17 +1,13 @@
 `timescale 1 ns/10 ps
 module mux_32_to_1(
 	// mux inputs
-	input wire [31:0] mux_input_0, mux_input_1, mux_input_2, mux_input_3, mux_input_4, 
-	input wire [31:0] mux_input_5, mux_input_6, mux_input_7, mux_input_8, mux_input_9, 
-	input wire [31:0] mux_input_10, mux_input_11, mux_input_12, mux_input_13, mux_input_14,
-	input wire [31:0] mux_input_15, mux_input_16, mux_input_17, mux_input_18, mux_input_19, 
-	input wire [31:0] mux_input_20, mux_input_21, mux_input_22, mux_input_23, mux_input_24, 
-	input wire [31:0] mux_input_25, mux_input_26, mux_input_27, mux_input_28, mux_input_29,
-	input wire [31:0] mux_input_30, mux_input_31,
-	// mux select signal
-	input wire [4:0] mux_sel,
-	// mux output
-	output reg [31:0] mux_out
+	input wire [31:0] mux_input_0, mux_input_1, mux_input_2, mux_input_3, mux_input_4, mux_input_5,  
+		mux_input_6, mux_input_7, mux_input_8, mux_input_9, mux_input_10, mux_input_11, mux_input_12,
+		mux_input_13, mux_input_14, mux_input_15, mux_input_16, mux_input_17, mux_input_18, mux_input_19,
+		mux_input_20, mux_input_21, mux_input_22, mux_input_23, mux_input_24, mux_input_25, mux_input_26,
+		mux_input_27, mux_input_28, mux_input_29, mux_input_30, mux_input_31,
+	input wire [4:0] mux_sel, // mux select signal
+	output reg [31:0] mux_out // mux output
 );
 	always@(*)
 	begin

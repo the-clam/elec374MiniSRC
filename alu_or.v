@@ -4,8 +4,5 @@ module alu_or (
 	output reg [31:0] C
 );
 	integer i;
-	always@(*)
-	begin
-		for(i = 0; i < 32; i = i + 1) C[i] <= A[i] | B[i];
-	end
+	always@(*) for(i = 0; i < 32; i = i + 1) C[i] <= A[i] | B[i];
 endmodule

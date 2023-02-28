@@ -1,11 +1,8 @@
 `timescale 1 ns/10 ps
 module mux_2_to_1(
-	// mux inputs to select from
-	input wire [31:0] mux_input_0, mux_input_1,
-	// mux select signal
-	input wire mux_sel,
-	// mux output
-	output reg [31:0] mux_out
+	input wire [31:0] mux_input_0, mux_input_1, // mux inputs to select from
+	input wire mux_sel, // mux select signal
+	output reg [31:0] mux_out // mux output
 );
 	always@(*)
 	begin

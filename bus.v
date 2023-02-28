@@ -1,22 +1,18 @@
 `timescale 1ns / 10ps
 module bus (
 	// select signals
-	input wire R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out,
-	input wire R9out, R10out, R11out, R12out, R13out, R14out, R15out,
-	input wire HIout, LOout, Zhighout, Zlowout, PCout, MDRout, InPortout, Cout,
+	input wire R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out,
+		R12out, R13out, R14out, R15out, HIout, LOout, Zhighout, Zlowout, PCout, MDRout, InPortout, Cout,
 	// 32 bit input to 32-to-1 mux
 	input wire [31:0] BusMuxIn_R0, BusMuxIn_R1, BusMuxIn_R2, BusMuxIn_R3, BusMuxIn_R4, BusMuxIn_R5,
-	input wire [31:0] BusMuxIn_R6, BusMuxIn_R7, BusMuxIn_R8, BusMuxIn_R9, BusMuxIn_R10,
-	input wire [31:0] BusMuxIn_R11, BusMuxIn_R12, BusMuxIn_R13, BusMuxIn_R14, BusMuxIn_R15,
-	input wire [31:0] BusMuxIn_HI, BusMuxIn_LO, BusMuxIn_Zhigh, BusMuxIn_Zlow,
-	input wire [31:0] BusMuxIn_PC, BusMuxIn_MDR, BusMuxIn_InPort, C_sign_extended,
+		BusMuxIn_R6, BusMuxIn_R7, BusMuxIn_R8, BusMuxIn_R9, BusMuxIn_R10, BusMuxIn_R11, BusMuxIn_R12,
+		BusMuxIn_R13, BusMuxIn_R14, BusMuxIn_R15, BusMuxIn_HI, BusMuxIn_LO, BusMuxIn_Zhigh, BusMuxIn_Zlow,
+		BusMuxIn_PC, BusMuxIn_MDR, BusMuxIn_InPort, C_sign_extended,
 	// bus output
 	output wire [31:0] BusMuxOut	
 );
-	// input to 32-to-5 encoder, output is based on input select signal
-	reg [31:0] bus_enc_input;
-   	// intermediate output from 32-to-5 encoder, to be put into 32-to-1 mux
-   	wire [4:0] bus_enc_output;
+	reg [31:0] bus_enc_input; // input to 32-to-5 encoder, output is based on input select signal
+   	wire [4:0] bus_enc_output; // intermediate output from 32-to-5 encoder, to be put into 32-to-1 mux
 	// connect encoder in signal to bus
    	enc_32_to_5 bus_encoder(.enc_input(bus_enc_input), .enc_output(bus_enc_output));
 	// bus instantiation

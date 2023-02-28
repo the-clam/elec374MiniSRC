@@ -31,8 +31,7 @@ module alu_mul_old(
 				default : multiplied = {32'b0}; // 3'b000, 3'b111 : 0
 			endcase
 			shifted = $signed(multiplied);
-			// Shift partial product to be added to the final product sum.
-			// ie. for partial product @ bit 2, shift 2 bits over
+			// Shift partial product based on bit.
 			for(shifts = 0; shifts < bits; shifts = shifts + 1) shifted = {shifted, 1'b0};
 			// Add shifted partial product to the final sum.
 			sum = sum + shifted;

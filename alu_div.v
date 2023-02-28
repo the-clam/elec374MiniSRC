@@ -30,20 +30,15 @@ module alu_div(
 		// Run non-restoring algorithm.
 		for(i = 0; i < 32; i = i + 1)
 		begin
-			// Shift A and Q left one binary position.
-			A_reg = {A_reg[31:0], Q_reg[31]};
+			A_reg = {A_reg[31:0], Q_reg[31]}; // Shift A and Q left one binary position.
 			Q_reg = {Q_reg[30:0], 1'bX};
-			// If A < 0, add M to A, otherwise subtract M from A.
-			if(A_reg[32] == 1) A_reg = A_reg + M_reg;
-			else A_reg = A_reg - M_reg;
-			// If A < 0, Q[0] = 0, otherwise, Q[0] = 1.
-			if(A_reg[32] == 1) Q_reg[0] = 1'b0;
+			if(A_reg[32] == 1) A_reg = A_reg + M_reg; // If A < 0, A += M, otherwise A -= M.
+			else A_reg = A_reg - M_reg; 
+			if(A_reg[32] == 1) Q_reg[0] = 1'b0; // If A < 0, Q[0] = 0, otherwise, Q[0] = 1.
 			else Q_reg[0] = 1'b1;
 		end	
-		// 2's complement answer to get negative quotient if needed. 
-		if(needs_complement) Q_reg = ~Q_reg + 1;
-		// If remainder < 0, add divisor to get proper remainder value.
-		if(A_reg[32] == 1) A_reg = A_reg + M_reg;
+		if(needs_complement) Q_reg = ~Q_reg + 1; // 2's comp answer to get negative quotient if needed. 
+		if(A_reg[32] == 1) A_reg = A_reg + M_reg; // If remainder < 0, A += M to get positive remainder.
 	end
 	assign Q = Q_reg[31:0];
 	assign R = A_reg[31:0];
