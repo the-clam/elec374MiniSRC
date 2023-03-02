@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 10ps
 module alu_not (
 	input wire [31:0] data_input, output wire [31:0] data_output
 );
