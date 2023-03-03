@@ -3,11 +3,9 @@ module select_encode(
 	input wire Gra, Grb, Grc, Rin, Rout, BAout,
 	input wire [31:0] IR_Data,
 	output wire [31:0] C_sign_extended,
-	output wire [15:0] RXin, RXout,
-	
-	output wire [3:0] Ra_sel, Rb_sel, Rc_sel
+	output wire [15:0] RXin, RXout
 );
-	// output wire [3:0] Ra_sel, Rb_sel, Rc_sel; // and with IR bits for reg inputs
+	wire [3:0] Ra_sel, Rb_sel, Rc_sel; // and with IR bits for reg inputs
 	wire [3:0] dec_input; 
 	wire [15:0] dec_output; 
 	
@@ -20,7 +18,7 @@ module select_encode(
 	assign dec_input = Ra_sel | Rb_sel | Rc_sel;
 		
 	// OUTPUT LOGIC
-	assign RXin = & {16{Rin}}; 
+	assign RXin = dec_output & {16{Rin}}; 
 	assign RXout = dec_output & {{16{Rout}} | {16{BAout}}}; 
 	assign C_sign_extended = {{13{IR_Data[18]}}, {IR_Data[18:0]}}; // Sign extend C [18:0] using MSB
 endmodule
