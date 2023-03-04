@@ -5,25 +5,20 @@ module datapath(
     // Bus Register Input Controls
     output wire [15:0] RX_in, // receives input from select and encode
     input wire PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, Read, OutPort_in,
-    // Bus Register Output Select Controls
+    // Bus Register Output Controls
     output wire [15:0] RX_out, // receives input from select and encode
     input wire PC_out, Zhigh_out, Zlow_out, HI_out, LO_out, MDR_out, InPort_out, C_out,
-    
-    input wire [4:0] alu_instruction, // ALU opcode
-    output wire [31:0] Mdatain, // memory data from ram
-    
+    // Data Signals for Bus, ALU, and Registers
+    output wire [31:0] Bus_Data, ALUHigh_Data, ALULow_Data, R0_Data, R1_Data, R2_Data, R3_Data, R4_Data, 
+        R5_Data, R6_Data, R7_Data, R8_Data, R9_Data, R10_Data, R11_Data, R12_Data, R13_Data, R14_Data,
+        R15_Data, PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data,
+        InPort_Data, C_sign_extended_Data, Mdatain,
     // Signals to RAM
     input wire RAM_read, RAM_write,
     // Select and Encode Logic Signals
     input wire Gra, Grb, Grc, Rin, Rout, BAout,
     // Signals from CON FF Logic
     output wire CON_out,
-
-    // Data Signals for Bus, ALU, and Registers
-    output wire [31:0] Bus_Data, ALUHigh_Data, ALULow_Data, R0_Data, R1_Data, R2_Data, R3_Data, R4_Data, 
-        R5_Data, R6_Data, R7_Data, R8_Data, R9_Data, R10_Data, R11_Data, R12_Data, R13_Data, R14_Data,
-        R15_Data, PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data,
-        InPort_Data, C_sign_extended_Data
 );
 /* REGISTERS */
 reg32_baout R0_reg (.clr(clr), .clk(clk), .en(RX_in[0]), .BAout(BAout), .D(Bus_Data), .Q(R0_Data));
@@ -76,7 +71,7 @@ bus the_bus(
 );
 /* ALU */
 alu the_alu(
-    .instruction(alu_instruction), .A_in(Y_Data), .B_in(Bus_Data), .Z_high(ALUHigh_Data), .Z_low(ALULow_Data)
+    .IR_Data_In(IR_Data), .A_in(Y_Data), .B_in(Bus_Data), .Z_high(ALUHigh_Data), .Z_low(ALULow_Data)
 );
 /* RAM */
 memory_ram the_ram(

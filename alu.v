@@ -1,7 +1,6 @@
 `timescale 1ns / 10ps
 module alu(
-	input wire [4:0] instruction,
-	input wire [31:0] A_in, B_in,
+	input wire [31:0] IR_Data_In, A_in, B_in,
 	output wire [31:0] Z_high, Z_low
 );
 	// Wires to carry data out from ALU modules.
@@ -27,7 +26,7 @@ module alu(
    	// Instruction decoding
 	always@(*)
   	begin
-		case(instruction)
+		case(IR_Data_In [31:27])
 			5'b00011 : C_result [63:0] <= {32'd0, add_out[31:0]}; // add
 			5'b00100 : C_result [63:0] <= {32'd0, sub_out[31:0]}; // sub
 			5'b00101 : C_result [63:0] <= {32'd0, and_out[31:0]}; // and
