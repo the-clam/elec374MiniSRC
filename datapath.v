@@ -4,7 +4,7 @@ module datapath(
     input clk, clr,
     // Register Input Controls
     input wire R0_in, R1_in, R2_in, R3_in, R4_in, R5_in, R6_in, R7_in, R8_in, R9_in, R10_in, R11_in, R12_in,
-        R13_in, R14_in, R15_in, PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, Read, BAout, OutPort_in
+        R13_in, R14_in, R15_in, PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, Read, BAout, OutPort_in,
     // Bus Select Controls
     input wire R0_out, R1_out, R2_out, R3_out, R4_out, R5_out, R6_out, R7_out, R8_out, R9_out, R10_out,
         R11_out, R12_out, R13_out, R14_out, R15_out, PC_out, Zhigh_out, Zlow_out, HI_out, LO_out, MDR_out,
