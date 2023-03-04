@@ -22,7 +22,7 @@ module enc_32_to_5(
 			32'h04000000 : enc_output <= 5'd26; 32'h08000000 : enc_output <= 5'd27;
 			32'h10000000 : enc_output <= 5'd28; 32'h20000000 : enc_output <= 5'd29;
 			32'h40000000 : enc_output <= 5'd30; 32'h80000000 : enc_output <= 5'd31;
-			default : enc_output <= 5'bX;
+			default : enc_output <= 5'bXXXXX;
 		endcase
 	end
 endmodule

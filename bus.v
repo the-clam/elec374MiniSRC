@@ -41,6 +41,6 @@ module bus (
 		else if(Zhighout) bus_enc_input <= 32'h00040000; else if(Zlowout) bus_enc_input <= 32'h00080000;
 		else if(PCout) bus_enc_input <= 32'h00100000; else if(MDRout) bus_enc_input <= 32'h00200000;
 		else if(InPortout) bus_enc_input <= 32'h00400000; else if(Cout) bus_enc_input <= 32'h00800000;
-		else bus_enc_input <= 32'hX;
+		else bus_enc_input <= 32'hXXXXXXXX;
 	end
 endmodule

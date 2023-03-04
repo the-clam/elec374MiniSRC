@@ -20,5 +20,5 @@ module select_encode(
 	// OUTPUT LOGIC
 	assign RXin = dec_output & {16{Rin}}; 
 	assign RXout = dec_output & {{16{Rout}} | {16{BAout}}}; 
-	assign C_sign_extended = {{13{IR_Data[18]}}, {IR_Data[18:0]}}; // Sign extend C [18:0] using MSB
+	assign C_sign_extended = {{13{IR_Data[18]}}, {IR_Data[18:0]}}; // Sign extend C [18:0]
 endmodule

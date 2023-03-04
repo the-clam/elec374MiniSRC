@@ -28,7 +28,7 @@ module mux_32_to_1(
 			5'b11010 : mux_out [31:0] <= mux_input_26; 5'b11011 : mux_out [31:0] <= mux_input_27;
 			5'b11100 : mux_out [31:0] <= mux_input_28; 5'b11101 : mux_out [31:0] <= mux_input_29;
 			5'b11110 : mux_out [31:0] <= mux_input_30; 5'b11111 : mux_out [31:0] <= mux_input_31;
-			default : mux_out [31:0] <= 32'bX;
+			default : mux_out [31:0] <= 32'hXXXXXXXX;
 		endcase
 	end
 endmodule

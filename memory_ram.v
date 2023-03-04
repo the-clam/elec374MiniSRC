@@ -1,6 +1,6 @@
 `timescale 1ns / 10ps
 module memory_ram(
-	input wire clk, read, write,  
+	input wire clk, read, write,
 	input wire [8:0] address_in,
 	input wire [31:0] data_input,
 	output reg [31:0] data_output
@@ -12,6 +12,6 @@ module memory_ram(
 	begin
 		if(write) ram_data [current_address] [31:0] <= data_input [31:0]; // Write data if write signal.
 		if(read) data_output [31:0] <= ram_data [current_address] [31:0]; // Output data if read signal.
-		else data_output [31:0] <= 32'bX; // If no read signal, unknown data from RAM.
+		else data_output [31:0] <= 32'hXXXXXXXX; // If no read signal, unknown data from RAM.
 	end
 endmodule
