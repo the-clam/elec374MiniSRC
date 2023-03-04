@@ -6,10 +6,8 @@ module dec_2_to_4(
     always@(*)
     begin
         case(dec_input)
-            2'b00 : dec_output = 4'b0001;
-            2'b01 : dec_output = 4'b0010;
-            2'b10 : dec_output = 4'b0100;
-            2'b11 : dec_output = 4'b1000;
+            2'b00 : dec_output = 4'b0001; 2'b01 : dec_output = 4'b0010;
+            2'b10 : dec_output = 4'b0100; 2'b11 : dec_output = 4'b1000;
         endcase
     end
 endmodule
