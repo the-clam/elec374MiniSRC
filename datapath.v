@@ -18,7 +18,9 @@ module datapath(
     // Select and Encode Logic Signals
     input wire Gra, Grb, Grc, Rin, Rout, BAout,
     // Signals from CON FF Logic
-    output wire CON_out
+    output wire CON_out,
+    // instruction bits for alu
+    input wire [4:0] alu_instruction_bits
 );
 /* REGISTERS */
 reg32_baout R0_reg (.clr(clr), .clk(clk), .en(RX_in[0]), .BAout(BAout), .D(Bus_Data), .Q(R0_Data));
@@ -71,7 +73,7 @@ bus the_bus(
 );
 /* ALU */
 alu the_alu(
-    .IR_Data_In(IR_Data), .A_in(Y_Data), .B_in(Bus_Data), .IncPC(IncPC), .Z_high(ALUHigh_Data), .Z_low(ALULow_Data)
+    .alu_instruction_bits(alu_instruction_bits), .A_in(Y_Data), .B_in(Bus_Data), .IncPC(IncPC), .Z_high(ALUHigh_Data), .Z_low(ALULow_Data)
 );
 /* RAM */
 memory_ram the_ram(
