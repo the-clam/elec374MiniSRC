@@ -1,11 +1,12 @@
 `timescale 1ns / 10ps
 module alu(
 	input wire [31:0] IR_Data_In, A_in, B_in,
-	output wire [31:0] Z_high, Z_low
+	input wire IncPC,
+	output wire [31:0] Z_high, Z_low	
 );
 	// Wires to carry data out from ALU modules.
 	wire [31:0] add_out, and_out, neg_out, not_out, or_out, rol_out, ror_out, shl_out, shr_out,
-				shra_out, sub_out;
+				shra_out, sub_out, inc_pc_out;
 	wire [63:0] mul_out, div_out;
 	wire add_cout, sub_cout;
 	reg [63:0] C_result;
@@ -23,6 +24,7 @@ module alu(
 	alu_shr shr_instance(.data_input(A_in), .num_shifts(B_in), .data_output(shr_out));
 	alu_shra shra_instance(.data_input(A_in), .num_shifts(B_in), .data_output(shra_out));
 	alu_sub sub_instance(.A(A_in), .B(B_in), .C_in(1'b0), .S(sub_out), .C_out(sub_cout));
+	inc_pc inc_pc_instance(.pc_input(B_in), .pc_output(inc_pc_out));
    	// Instruction decoding
 	always@(*)
   	begin
@@ -45,6 +47,7 @@ module alu(
 			5'b10010 : C_result [63:0] <= {32'd0, not_out[31:0]}; // not 
 			 default : C_result [63:0] <= 64'd0;
 		endcase
+		if(IncPC) C_result [63:0] <= {32'd0, inc_pc_out[31:0]};
 	end
 	assign Z_high = C_result[63:32]; assign Z_low = C_result[31:0];
 endmodule
