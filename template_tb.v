@@ -14,7 +14,7 @@ module template_tb;
         PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data, InPort_Data,
         C_sign_extended_Data, Mdatain,
     // Signals to RAM
-    reg RAM_write,
+    reg Write,
     // Select and Encode Logic Signals
     reg Gra, Grb, Grc, Rin, Rout, BAout,
     // Signals from CON FF Logic
@@ -31,7 +31,7 @@ datapath DUT(
     .R12_Data(R12_Data), .R13_Data(R13_Data), .R14_Data(R14_Data), .R15_Data(R15_Data), .PC_Data(PC_Data),
     .IR_Data(IR_Data), .Y_Data(Y_Data), .Zhigh_Data(Zhigh_Data), .Zlow_Data(Zlow_Data), .HI_Data(HI_Data),
     .LO_Data(LO_Data), .MAR_Data(MAR_Data), .MDR_Data(MDR_Data), .InPort_Data(InPort_Data),
-    .C_sign_extended_Data(C_sign_extended_Data), .Mdatain(Mdatain), .RAM_write(RAM_write),
+    .C_sign_extended_Data(C_sign_extended_Data), .Mdatain(Mdatain), .Write(Write),
     .Gra(Gra), .Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout), .BAout(BAout), .CON_out(CON_out),
 );
 
@@ -46,7 +46,7 @@ parameter Default = 4'b0000, Reg_load1a = 4'b0001, Reg_load1b = 4'b0010, Reg_loa
     T2 = 4'b1001, T3 = 4'b1010, T4 = 4'b1011, T5 = 4'b1100, T6 = 4'b1101; T7 = 4'b1110
 reg [3:0] Present_state = Default;
 
-always @(posedge clk) // finite state machine; if clock rising-edge
+always @(posedge clk)
 begin
 	case (Present_state)
 		Default : #35 Present_state = Reg_load1a;
@@ -66,22 +66,19 @@ begin
 	endcase
 end
 
-
-
 always @(Present_state)
 begin
 	case(Present_state)
         Default: begin
-                RX_in <= 16'h0000; PC_in <= 0; IR_in <= 0; Y_in <= 0; Z_in <= 0; HI_in <= 0; LO_in <= 0; 
-                MAR_in <= 0; MDR_in <= 0; Read <= 0; OutPort_in <= 0; RX_out <= 16'h0000; PC_out <= 0;
-                Zhigh_out <= 0; Zlow_out <= 0; HI_out <= 0; LO_out <= 0; MDR_out <= 0; InPort_out <= 0;
-                C_out <= 0; RAM_write <= 0; Gra <= 0; Grb <= 0; Grc <= 0; Rin <= 0; Rout <= 0; BAout <= 0;
+                RX_in <= 16'h0000; PC_in <= 0; IR_in <= 0; Y_in <= 0; Z_in <= 0; HI_in <= 0; LO_in <= 0;
+                MAR_in <= 0; MDR_in <= 0; OutPort_in <= 0; RX_out <= 16'h0000; PC_out <= 0; Zhigh_out <= 0;
+                Zlow_out <= 0; HI_out <= 0; LO_out <= 0; MDR_out <= 0; InPort_out <= 0; C_out <= 0;
+                Read <= 0; Write <= 0; Gra <= 0; Grb <= 0; Grc <= 0; Rin <= 0; Rout <= 0; BAout <= 0;
             end
 
 //////////////////////////////////////////////////////
 // UP TO HERE SHOULD BE GENERIC FOR ALL TESTBENCHES //
 //////////////////////////////////////////////////////
-
 
         Reg_load1a: begin
                 Mdatain_tb <= 32'hFA92;

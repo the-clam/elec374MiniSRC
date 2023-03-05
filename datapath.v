@@ -4,7 +4,7 @@ module datapath(
     input clk, clr,
     // Bus Register Input Controls
     output wire [15:0] RX_in, // receives input from select and encode
-    input wire PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, Read, OutPort_in,
+    input wire PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, OutPort_in, IncPC,
     // Bus Register Output Controls
     output wire [15:0] RX_out, // receives input from select and encode
     input wire PC_out, Zhigh_out, Zlow_out, HI_out, LO_out, MDR_out, InPort_out, C_out,
@@ -13,12 +13,12 @@ module datapath(
         R5_Data, R6_Data, R7_Data, R8_Data, R9_Data, R10_Data, R11_Data, R12_Data, R13_Data, R14_Data,
         R15_Data, PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data,
         InPort_Data, C_sign_extended_Data, Mdatain,
-    // Signals to RAM
-    input wire RAM_write,
+    // Signals to RAM/MDR
+    input wire Read, Write,
     // Select and Encode Logic Signals
     input wire Gra, Grb, Grc, Rin, Rout, BAout,
     // Signals from CON FF Logic
-    output wire CON_out,
+    output wire CON_out
 );
 /* REGISTERS */
 reg32_baout R0_reg (.clr(clr), .clk(clk), .en(RX_in[0]), .BAout(BAout), .D(Bus_Data), .Q(R0_Data));
@@ -71,11 +71,11 @@ bus the_bus(
 );
 /* ALU */
 alu the_alu(
-    .IR_Data_In(IR_Data), .A_in(Y_Data), .B_in(Bus_Data), .Z_high(ALUHigh_Data), .Z_low(ALULow_Data)
+    .IR_Data_In(IR_Data), .A_in(Y_Data), .B_in(Bus_Data), .IncPC(IncPC), .Z_high(ALUHigh_Data), .Z_low(ALULow_Data)
 );
 /* RAM */
 memory_ram the_ram(
-    .clk(clk), .read(Read), .write(RAM_write), .address_in(MAR_Data), 
+    .clk(clk), .read(Read), .write(Write), .address_in(MAR_Data), 
     .data_input(MDR_Data), .data_output(Mdatain)
 );
 /* SELECT & ENCODE LOGIC MODULE */
