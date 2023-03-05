@@ -14,7 +14,7 @@ module datapath(
         R15_Data, PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data,
         InPort_Data, C_sign_extended_Data, Mdatain,
     // Signals to RAM
-    input wire RAM_read, RAM_write,
+    input wire RAM_write,
     // Select and Encode Logic Signals
     input wire Gra, Grb, Grc, Rin, Rout, BAout,
     // Signals from CON FF Logic
@@ -75,7 +75,7 @@ alu the_alu(
 );
 /* RAM */
 memory_ram the_ram(
-    .clk(clk), .read(RAM_read), .write(RAM_write), .address_in(MAR_Data), 
+    .clk(clk), .read(Read), .write(RAM_write), .address_in(MAR_Data), 
     .data_input(MDR_Data), .data_output(Mdatain)
 );
 /* SELECT & ENCODE LOGIC MODULE */
