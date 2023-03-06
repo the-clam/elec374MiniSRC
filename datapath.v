@@ -21,7 +21,7 @@ module datapath(
     output wire CON_out,
     // instruction bits for alu
     input wire [4:0] alu_instruction_bits,
-    // input for registers
+    // manual input enable for registers
     input wire [31:0] InPort_Data_In,
     input wire [15:0] RX_in_man, RX_out_man
 );
@@ -82,7 +82,8 @@ bus the_bus(
 );
 /* ALU */
 alu the_alu(
-    .alu_instruction_bits(alu_instruction_bits), .A_in(Y_Data), .B_in(Bus_Data), .IncPC(IncPC), .Z_high(ALUHigh_Data), .Z_low(ALULow_Data)
+    .alu_instruction_bits(alu_instruction_bits), .A_in(Y_Data), .B_in(Bus_Data), .IncPC(IncPC), 
+	 .Z_high(ALUHigh_Data), .Z_low(ALULow_Data)
 );
 /* RAM */
 memory_ram the_ram(
