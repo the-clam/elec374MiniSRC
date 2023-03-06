@@ -103,8 +103,8 @@ begin
             #40; MDR_out <= 0; IR_in <= 0;  
         end
         T3: begin // T3-T4: Calculate effective address (R1 + Const = -$44 + $45 = 0x1).
-            #0; Grb <= 1; BAout <= 1; Y_in <= 1;
-            #40; Grb <= 0; BAout <= 0; Y_in <= 0;
+            #0; Grb <= 1; Rout <= 1; Y_in <= 1;
+            #40; Grb <= 0; Rout <= 0; Y_in <= 0;
         end
         T4: begin
             #0; C_out <= 1; alu_instruction_bits <= 5'b00011; Z_in <= 1;
