@@ -5,8 +5,10 @@ module mux_2_to_1(
 	output reg [31:0] mux_out // mux output
 );
 	always@(*)
-	begin
-		if(mux_sel == 1) mux_out [31:0] <= mux_input_1 [31:0];
-		if(mux_sel == 0) mux_out [31:0] <= mux_input_0 [31:0];
+	begin 
+		case(mux_sel)
+			1'b0 : mux_out [31:0] <= mux_input_0 [31:0];
+			1'b1 : mux_out [31:0] <= mux_input_1 [31:0];
+		endcase
 	end
 endmodule
