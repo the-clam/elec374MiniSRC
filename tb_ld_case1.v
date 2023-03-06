@@ -1,5 +1,5 @@
 `timescale 1ns / 10ps
-module tb_ld;
+module tb_ld_case1;
     // CPU Signals
     reg clk = 0; reg clr = 0;
     // Bus Register Input Controls
@@ -17,6 +17,9 @@ module tb_ld;
     wire CON_out;
     // instruction bits for alu
     reg [4:0] alu_instruction_bits;
+	 // input for registers
+    reg [31:0] InPort_Data_In;
+    reg [15:0] RX_in_man, RX_out_man;
 
     // Data Signals for Bus, ALU, and Registers
     wire [31:0] Bus_Data, ALUHigh_Data, ALULow_Data, R0_Data, R1_Data, R2_Data, R3_Data, R4_Data, R5_Data,
@@ -37,7 +40,8 @@ datapath DUT(
     .Zlow_Data(Zlow_Data), .LO_Data(LO_Data), .MAR_Data(MAR_Data), .MDR_Data(MDR_Data),
     .InPort_Data(InPort_Data), .C_sign_extended_Data(C_sign_extended_Data), .Mdatain(Mdatain), .Write(Write),
     .Gra(Gra), .Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout), .BAout(BAout), .CON_out(CON_out),
-    .alu_instruction_bits(alu_instruction_bits)
+    .alu_instruction_bits(alu_instruction_bits), .InPort_Data_In(InPort_Data_In), 
+    .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
 );
 
 initial
@@ -76,43 +80,43 @@ always@(Present_state)
 begin
 	case(Present_state)
         Default: begin // Assert all control signals to 0.
-                PC_in <= 0; IR_in <= 0; Y_in <= 0; Z_in <= 0; HI_in <= 0; LO_in <= 0;  MAR_in <= 0;
-                MDR_in <= 0; OutPort_in <= 0; PC_out <= 0; Zhigh_out <= 0; Zlow_out <= 0; HI_out <= 0;
-                LO_out <= 0; MDR_out <= 0; InPort_out <= 0; C_out <= 0; Read <= 0; Write <= 0;
-                Gra <= 0; Grb <= 0; Grc <= 0; Rin <= 0; Rout <= 0; BAout <= 0; alu_instruction_bits <= 0;
-            end
+            PC_in <= 0; IR_in <= 0; Y_in <= 0; Z_in <= 0; HI_in <= 0; LO_in <= 0;  MAR_in <= 0; MDR_in <= 0; 
+            OutPort_in <= 0; PC_out <= 0; Zhigh_out <= 0; Zlow_out <= 0; HI_out <= 0; LO_out <= 0;
+            MDR_out <= 0; InPort_out <= 0; C_out <= 0; Read <= 0; Write <= 0; Gra <= 0; Grb <= 0; Grc <= 0;
+            Rin <= 0; Rout <= 0; BAout <= 0; alu_instruction_bits <= 0;
+        end
         T0: begin // T0-T2: Instruction Fetch from 0x0, Increment PC
-                #0; PC_out <= 1; MAR_in <= 1; IncPC <= 1; Z_in <= 1;
-                #40; PC_out <= 0; MAR_in <= 0; IncPC <= 0; Z_in <= 0;
-            end
+            #0; PC_out <= 1; MAR_in <= 1; IncPC <= 1; Z_in <= 1;
+            #40; PC_out <= 0; MAR_in <= 0; IncPC <= 0; Z_in <= 0;
+        end
         T1: begin // Instruction is ld R1, $75 or 00800075
-                #0; Zlow_out <= 1; PC_in <= 1; Read <= 1; MDR_in <= 1;
-                #40; Zlow_out <= 0; PC_in <= 0; Read <= 0; MDR_in <= 0;
-            end
+            #0; Zlow_out <= 1; PC_in <= 1; Read <= 1; MDR_in <= 1;
+            #40; Zlow_out <= 0; PC_in <= 0; Read <= 0; MDR_in <= 0;
+        end
         T2: begin
-                #0; MDR_out <= 1; IR_in <= 1;
-                #40; MDR_out <= 0; IR_in <= 0;  
-            end
+            #0; MDR_out <= 1; IR_in <= 1;
+            #40; MDR_out <= 0; IR_in <= 0;  
+        end
         T3: begin // T3-T4: Calculate effective address (Rb + Const)
-                #0; Grb <= 1; BAout <= 1; Y_in <= 1;
-                #40; Grb <= 0; BAout <= 0; Y_in <= 0;
-            end
+            #0; Grb <= 1; BAout <= 1; Y_in <= 1;
+            #40; Grb <= 0; BAout <= 0; Y_in <= 0;
+        end
         T4: begin
-                #0; C_out <= 1; alu_instruction_bits <= 5'b00011; Z_in <= 1;
-                #40; C_out <= 0; alu_instruction_bits <= 0; Z_in <= 0;
-            end
+            #0; C_out <= 1; alu_instruction_bits <= 5'b00011; Z_in <= 1;
+            #40; C_out <= 0; alu_instruction_bits <= 0; Z_in <= 0;
+        end
         T5: begin // Provide effective address as memory address
-                #0; Zlow_out <= 1; MAR_in <= 1;
-                #40; Zlow_out <= 0; MAR_in <= 0;
-            end
+            #0; Zlow_out <= 1; MAR_in <= 1;
+            #40; Zlow_out <= 0; MAR_in <= 0;
+        end
         T6: begin // Read value from memory (should be 0x12345678).
-                #0; Read <= 1; MDR_in <= 1;
-                #40; Read <= 0; MDR_in <= 0;
-            end
+            #0; Read <= 1; MDR_in <= 1;
+            #40; Read <= 0; MDR_in <= 0;
+        end
         T7: begin // Store value into R1 (0x12345678).
-                #0; MDR_out <= 1; Gra <= 1; Rin <= 1;
-                #40; MDR_out <= 0; Gra <= 0; Rin <= 0;
-            end
+            #0; MDR_out <= 1; Gra <= 1; Rin <= 1;
+            #40; MDR_out <= 0; Gra <= 0; Rin <= 0;
+        end
     endcase
 end
 endmodule
