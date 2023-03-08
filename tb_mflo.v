@@ -1,5 +1,5 @@
 `timescale 1ns / 10ps
-module tb_in;
+module tb_mflo;
     // CPU Signals
     reg clk = 0; reg clr = 0;
     // Bus Register Input Controls
@@ -55,13 +55,14 @@ end
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-parameter Default = 4'b0000, T0 = 4'b0001, T1 = 4'b0010, T2 = 4'b0011, T3 = 4'b0100;
+parameter Default = 4'b0000, LOLoad = 4'b0001, T0 = 4'b0010, T1 = 4'b0011, T2 = 4'b0100, T3 = 4'b0101;
 reg [3:0] Present_state = Default;
 
 always@(posedge clk) 
 begin
 	case (Present_state)
-		Default : #40 Present_state = T0;
+		Default : #40 Present_state = LOLoad;
+        LOLoad : #30 Present_state = T0;
 		T0 : #30 Present_state = T1;
 		T1 : #30 Present_state = T2;
 		T2 : #30 Present_state = T3;
@@ -78,11 +79,15 @@ begin
             LO_out <= 0; MDR_out <= 0; InPort_out <= 0; C_out <= 0; Read <= 0; Write <= 0; Gra <= 0;
             Grb <= 0; Grc <= 0; Rin <= 0; Rout <= 0; BAout <= 0; alu_instruction_bits <= 0;
         end
+        LOLoad: begin // Preload LO with 0xF00FF00F.
+            #0; InPort_Data_In <= 32'hF00FF00F; InPort_out <= 1; LO_in <= 1;
+            #40; InPort_Data_In <= 32'hX; InPort_out <= 0; LO_in <= 0;
+        end
         T0: begin // T0-T2: Instruction Fetch from 0x0, Increment PC
             #0; PC_out <= 1; MAR_in <= 1; IncPC <= 1; Z_in <= 1;
             #40; PC_out <= 0; MAR_in <= 0; IncPC <= 0; Z_in <= 0;
         end
-        T1: begin // Instruction is in R3 or 0xB1800000
+        T1: begin // Instruction is mflo R6 or 0xCB000000
             #0; Zlow_out <= 1; PC_in <= 1; Read <= 1; MDR_in <= 1;
             #40; Zlow_out <= 0; PC_in <= 0; Read <= 0; MDR_in <= 0;
         end
@@ -90,10 +95,10 @@ begin
             #0; MDR_out <= 1; IR_in <= 1;
             #40; MDR_out <= 0; IR_in <= 0;  
         end
-        T3: begin // load input value into R3, inport device should input 0x1020FCAE.
-            #0; Gra <= 1; Rin <= 1; InPort_out <= 1; InPort_Data_In <= 32'h1020FCAE;
-            #40; Gra <= 0; Rin <= 0; InPort_out <= 0; InPort_Data_In <= 32'hX;
+        T3: begin // load LO value of 0xF00FF00F into R6 reg
+            #0; Gra <= 1; Rin <= 1; LO_out <= 1;
+            #40; Gra <= 0; Rin <= 0; LO_out <= 0;
         end
     endcase
 end
-endmodule
+endmodule 
