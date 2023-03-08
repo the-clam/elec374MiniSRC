@@ -102,4 +102,3 @@ con_ff_logic the_con_ff_logic(
     .CON_in(clk), .clr(clr), .IR_Data_In(IR_Data), .Bus_Data_In(Bus_Data), .CON_out(CON_out)
 );
 endmodule
-
