@@ -47,8 +47,7 @@ datapath DUT(
     .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
 );
 
-initial
-begin
+initial begin
     clk = 1;
     forever begin clk = ~clk; #10; end
 end

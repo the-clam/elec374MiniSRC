@@ -47,8 +47,7 @@ datapath DUT(
     .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
 );
 
-initial
-begin
+initial begin
     clk = 1;
     forever begin clk = ~clk; #10; end
 end
@@ -58,8 +57,7 @@ end
 parameter Default = 4'b0000, R2Load = 4'b0001, T0 = 4'b0010, T1 = 4'b0011, T2 = 4'b0100, T3 = 4'b0101;
 reg [3:0] Present_state = Default;
 
-always@(posedge clk) 
-begin
+always@(posedge clk) begin
 	case (Present_state)
 		Default : #40 Present_state = R2Load;
         R2Load : #30 Present_state = T0;
@@ -70,8 +68,7 @@ begin
 	endcase
 end
 
-always@(Present_state)
-begin
+always@(Present_state) begin
 	case(Present_state)
         Default: begin
             PC_in <= 0; IR_in <= 0; Y_in <= 0; Z_in <= 0; HI_in <= 0; LO_in <= 0;  MAR_in <= 0;
