@@ -56,7 +56,7 @@ parameter Default = 4'b0000, R1Load = 4'b0001, T0 = 4'b0010, T1 = 4'b0011, T2 = 
     T4 = 4'b0110, T5 = 4'b01110;
 reg [3:0] Present_state = Default;
 
-always @(posedge clk) 
+always@(posedge clk) 
 begin
 	case (Present_state)
 		Default : #40 Present_state = R1Load;

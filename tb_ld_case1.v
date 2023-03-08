@@ -56,7 +56,7 @@ parameter Default = 4'b0000, T0 = 4'b0001, T1 = 4'b0010, T2 = 4'b0011, T3 = 4'b0
     T5 = 4'b0110, T6 = 4'b0111, T7 = 5'b1000;
 reg [3:0] Present_state = Default;
 
-always @(posedge clk) 
+always@(posedge clk) 
 begin
 	case (Present_state)
 		Default : #40 Present_state = T0;

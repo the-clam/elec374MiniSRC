@@ -50,7 +50,7 @@ begin
     forever begin clk = ~clk; #10; end
 end
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 parameter 
 Default = 5'b00000, R4Load = 5'b00001, T0 = 5'b00010, T1 = 5'b00011, T2 = 5'b00100, T3 = 5'b00101,
@@ -59,7 +59,7 @@ Default = 5'b00000, R4Load = 5'b00001, T0 = 5'b00010, T1 = 5'b00011, T2 = 5'b001
     Check7 = 5'b10001;
 reg [4:0] Present_state = Default;
 
-always @(posedge clk) 
+always@(posedge clk) 
 begin
 	case (Present_state)
 		Default : #40 Present_state = R4Load;
