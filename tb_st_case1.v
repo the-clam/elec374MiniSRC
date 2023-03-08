@@ -17,8 +17,10 @@ module tb_st_case1;
     wire CON_out;
     // instruction bits for alu
     reg [4:0] alu_instruction_bits;
-	 // input for registers
+	// input/output ports
     reg [31:0] InPort_Data_In;
+    wire [31:0] Outport_Data_Out;
+    // input for registers
     reg [15:0] RX_in_man, RX_out_man;
 
     // Data Signals for Bus, ALU, and Registers
@@ -38,10 +40,11 @@ datapath DUT(
     .R11_Data(R11_Data), .R12_Data(R12_Data), .R13_Data(R13_Data), .R14_Data(R14_Data), 
     .R15_Data(R15_Data), .HI_Data(HI_Data), .PC_Data(PC_Data), .IR_Data(IR_Data), .Y_Data(Y_Data),
     .Zhigh_Data(Zhigh_Data), .Zlow_Data(Zlow_Data), .LO_Data(LO_Data), .MAR_Data(MAR_Data),
-    .MDR_Data(MDR_Data), .InPort_Data(InPort_Data), .C_sign_extended_Data(C_sign_extended_Data),
-    .Mdatain(Mdatain), .Write(Write), .Gra(Gra), .Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout),
+    .MDR_Data(MDR_Data), .InPort_Data(InPort_Data), .C_sign_extended_Data(C_sign_extended_Data), 
+    .Mdatain(Mdatain), .Write(Write), .Gra(Gra), .Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout), 
     .BAout(BAout), .CON_out(CON_out), .alu_instruction_bits(alu_instruction_bits),
-    .InPort_Data_In(InPort_Data_In), .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
+    .InPort_Data_In(InPort_Data_In), .Outport_Data_Out(Outport_Data_Out),
+    .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
 );
 
 initial

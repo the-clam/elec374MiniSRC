@@ -22,7 +22,8 @@ module datapath(
     // instruction bits for alu
     input wire [4:0] alu_instruction_bits,
     // manual input enable for registers
-    input wire [31:0] InPort_Data_In,
+    input wire [31:0] InPort_Data_In, 
+    output wire [31:0] Outport_Data_Out,
     input wire [15:0] RX_in_man, RX_out_man
 );
 /* REGISTERS */
@@ -60,7 +61,7 @@ reg32_mdr MDR_reg (
 );
 /* INPUT/OUTPUT PORTS */
 reg32 InPort (.clr(clr), .clk(clk), .en(1'b1), .D(InPort_Data_In), .Q(InPort_Data));
-reg32 OutPort (.clr(clr), .clk(clk), .en(OutPort_in), .D(Bus_Data), .Q(/*** TO EXTERNAL SOURCE ***/));
+reg32 OutPort (.clr(clr), .clk(clk), .en(OutPort_in), .D(Bus_Data), .Q(Outport_Data_Out));
 /* BUS */
 bus the_bus(
     // Out Signals
