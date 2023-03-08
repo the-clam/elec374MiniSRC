@@ -8,7 +8,7 @@ module memory_ram(
 	reg [8:0] current_address; // Hold incoming MAR data.
 	reg [31:0] ram_data [511:0]; // Actual RAM.
 	// https://projectf.io/posts/initialize-memory-in-verilog/
-	initial $readmemh("tb_mfhi.mif", ram_data); // Preload RAM data with file.
+	initial $readmemh("tb_jal.mif", ram_data); // Preload RAM data with file.
 	always@(address_in) current_address [8:0] <= address_in [8:0]; // MAR always updates RAM address_in.
 	always@(posedge clk) // Synchronous operations.
 	begin
