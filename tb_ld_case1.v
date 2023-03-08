@@ -24,39 +24,34 @@ module tb_ld_case1;
     // Data Signals for Bus, ALU, and Registers
     wire [31:0] Bus_Data, ALUHigh_Data, ALULow_Data, R0_Data, R1_Data, R2_Data, R3_Data, R4_Data, R5_Data,
         R6_Data, R7_Data, R8_Data, R9_Data, R10_Data, R11_Data, R12_Data, R13_Data, R14_Data, R15_Data,
-        PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data, InPort_Data,
-        C_sign_extended_Data, Mdatain;
+        PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data, 
+        InPort_Data, C_sign_extended_Data, Mdatain;
 
 datapath DUT(
-    .clk(clk), .clr(clr), .RX_in(RX_in), .PC_in(PC_in), .IR_in(IR_in), .Y_in(Y_in), .Z_in(Z_in),
+    .clk(clk), .clr(clr), .RX_in(RX_in), .PC_in(PC_in), .IR_in(IR_in), .Y_in(Y_in), .Z_in(Z_in), 
     .HI_in(HI_in), .LO_in(LO_in), .MAR_in(MAR_in), .MDR_in(MDR_in), .Read(Read), .OutPort_in(OutPort_in),
-    .IncPC(IncPC), .RX_out(RX_out), .PC_out(PC_out), .Zhigh_out(Zhigh_out), .Zlow_out(Zlow_out), 
+    .IncPC(IncPC), .RX_out(RX_out), .PC_out(PC_out), .Zhigh_out(Zhigh_out), .Zlow_out(Zlow_out),
     .HI_out(HI_out), .LO_out(LO_out), .MDR_out(MDR_out), .InPort_out(InPort_out), .C_out(C_out), 
     .Bus_Data(Bus_Data), .ALUHigh_Data(ALUHigh_Data), .ALULow_Data(ALULow_Data), .R0_Data(R0_Data), 
     .R1_Data(R1_Data), .R2_Data(R2_Data), .R3_Data(R3_Data), .R4_Data(R4_Data), .R5_Data(R5_Data), 
     .R6_Data(R6_Data), .R7_Data(R7_Data), .R8_Data(R8_Data), .R9_Data(R9_Data), .R10_Data(R10_Data), 
-    .R11_Data(R11_Data), .R12_Data(R12_Data), .R13_Data(R13_Data), .R14_Data(R14_Data), .R15_Data(R15_Data), 
-    .HI_Data(HI_Data), .PC_Data(PC_Data), .IR_Data(IR_Data), .Y_Data(Y_Data), .Zhigh_Data(Zhigh_Data), 
-    .Zlow_Data(Zlow_Data), .LO_Data(LO_Data), .MAR_Data(MAR_Data), .MDR_Data(MDR_Data),
-    .InPort_Data(InPort_Data), .C_sign_extended_Data(C_sign_extended_Data), .Mdatain(Mdatain), .Write(Write),
-    .Gra(Gra), .Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout), .BAout(BAout), .CON_out(CON_out),
-    .alu_instruction_bits(alu_instruction_bits), .InPort_Data_In(InPort_Data_In), 
-    .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
+    .R11_Data(R11_Data), .R12_Data(R12_Data), .R13_Data(R13_Data), .R14_Data(R14_Data), 
+    .R15_Data(R15_Data), .HI_Data(HI_Data), .PC_Data(PC_Data), .IR_Data(IR_Data), .Y_Data(Y_Data),
+    .Zhigh_Data(Zhigh_Data), .Zlow_Data(Zlow_Data), .LO_Data(LO_Data), .MAR_Data(MAR_Data), 
+    .MDR_Data(MDR_Data), .InPort_Data(InPort_Data), .C_sign_extended_Data(C_sign_extended_Data),
+    .Mdatain(Mdatain), .Write(Write), .Gra(Gra), .Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout), 
+    .BAout(BAout), .CON_out(CON_out), .alu_instruction_bits(alu_instruction_bits),
+    .InPort_Data_In(InPort_Data_In), .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
 );
 
 initial
 begin
     clk = 1;
-    forever 
-	begin
-		clk = ~clk;
-		#10;
-	end
+    forever begin clk = ~clk; #10; end
 end
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Add or remove cases as needed.
 parameter Default = 4'b0000, T0 = 4'b0001, T1 = 4'b0010, T2 = 4'b0011, T3 = 4'b0100, T4 = 4'b0101,
     T5 = 4'b0110, T6 = 4'b0111, T7 = 5'b1000;
 reg [3:0] Present_state = Default;
@@ -79,11 +74,11 @@ end
 always@(Present_state)
 begin
 	case(Present_state)
-        Default: begin // Assert all control signals to 0.
-            PC_in <= 0; IR_in <= 0; Y_in <= 0; Z_in <= 0; HI_in <= 0; LO_in <= 0;  MAR_in <= 0; MDR_in <= 0; 
-            OutPort_in <= 0; PC_out <= 0; Zhigh_out <= 0; Zlow_out <= 0; HI_out <= 0; LO_out <= 0;
-            MDR_out <= 0; InPort_out <= 0; C_out <= 0; Read <= 0; Write <= 0; Gra <= 0; Grb <= 0; Grc <= 0;
-            Rin <= 0; Rout <= 0; BAout <= 0; alu_instruction_bits <= 0;
+        Default: begin
+            PC_in <= 0; IR_in <= 0; Y_in <= 0; Z_in <= 0; HI_in <= 0; LO_in <= 0;  MAR_in <= 0; 
+            MDR_in <= 0; OutPort_in <= 0; PC_out <= 0; Zhigh_out <= 0; Zlow_out <= 0; HI_out <= 0;
+            LO_out <= 0; MDR_out <= 0; InPort_out <= 0; C_out <= 0; Read <= 0; Write <= 0; Gra <= 0;
+            Grb <= 0; Grc <= 0; Rin <= 0; Rout <= 0; BAout <= 0; alu_instruction_bits <= 0;
         end
         T0: begin // T0-T2: Instruction Fetch from 0x0, Increment PC
             #0; PC_out <= 1; MAR_in <= 1; IncPC <= 1; Z_in <= 1;
@@ -97,7 +92,7 @@ begin
             #0; MDR_out <= 1; IR_in <= 1;
             #40; MDR_out <= 0; IR_in <= 0;  
         end
-        T3: begin // T3-T4: Calculate effective address (Rb + Const)
+        T3: begin
             #0; Grb <= 1; BAout <= 1; Y_in <= 1;
             #40; Grb <= 0; BAout <= 0; Y_in <= 0;
         end
@@ -105,7 +100,7 @@ begin
             #0; C_out <= 1; alu_instruction_bits <= 5'b00011; Z_in <= 1;
             #40; C_out <= 0; alu_instruction_bits <= 0; Z_in <= 0;
         end
-        T5: begin // Provide effective address as memory address
+        T5: begin
             #0; Zlow_out <= 1; MAR_in <= 1;
             #40; Zlow_out <= 0; MAR_in <= 0;
         end
@@ -113,7 +108,7 @@ begin
             #0; Read <= 1; MDR_in <= 1;
             #40; Read <= 0; MDR_in <= 0;
         end
-        T7: begin // Store value into R1 (0x12345678).
+        T7: begin // Store value into R1.
             #0; MDR_out <= 1; Gra <= 1; Rin <= 1;
             #40; MDR_out <= 0; Gra <= 0; Rin <= 0;
         end

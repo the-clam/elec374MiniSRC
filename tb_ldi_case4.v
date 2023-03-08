@@ -24,8 +24,8 @@ module tb_ldi_case4;
     // Data Signals for Bus, ALU, and Registers
     wire [31:0] Bus_Data, ALUHigh_Data, ALULow_Data, R0_Data, R1_Data, R2_Data, R3_Data, R4_Data, R5_Data,
         R6_Data, R7_Data, R8_Data, R9_Data, R10_Data, R11_Data, R12_Data, R13_Data, R14_Data, R15_Data,
-        PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data, InPort_Data,
-        C_sign_extended_Data, Mdatain;
+        PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data,
+        InPort_Data, C_sign_extended_Data, Mdatain;
 
 datapath DUT(
     .clk(clk), .clr(clr), .RX_in(RX_in), .PC_in(PC_in), .IR_in(IR_in), .Y_in(Y_in), .Z_in(Z_in),
@@ -35,28 +35,23 @@ datapath DUT(
     .Bus_Data(Bus_Data), .ALUHigh_Data(ALUHigh_Data), .ALULow_Data(ALULow_Data), .R0_Data(R0_Data), 
     .R1_Data(R1_Data), .R2_Data(R2_Data), .R3_Data(R3_Data), .R4_Data(R4_Data), .R5_Data(R5_Data), 
     .R6_Data(R6_Data), .R7_Data(R7_Data), .R8_Data(R8_Data), .R9_Data(R9_Data), .R10_Data(R10_Data), 
-    .R11_Data(R11_Data), .R12_Data(R12_Data), .R13_Data(R13_Data), .R14_Data(R14_Data), .R15_Data(R15_Data), 
-    .HI_Data(HI_Data), .PC_Data(PC_Data), .IR_Data(IR_Data), .Y_Data(Y_Data), .Zhigh_Data(Zhigh_Data), 
-    .Zlow_Data(Zlow_Data), .LO_Data(LO_Data), .MAR_Data(MAR_Data), .MDR_Data(MDR_Data),
-    .InPort_Data(InPort_Data), .C_sign_extended_Data(C_sign_extended_Data), .Mdatain(Mdatain), .Write(Write),
-    .Gra(Gra), .Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout), .BAout(BAout), .CON_out(CON_out),
-    .alu_instruction_bits(alu_instruction_bits), .InPort_Data_In(InPort_Data_In), 
-    .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
+    .R11_Data(R11_Data), .R12_Data(R12_Data), .R13_Data(R13_Data), .R14_Data(R14_Data), 
+    .R15_Data(R15_Data), .HI_Data(HI_Data), .PC_Data(PC_Data), .IR_Data(IR_Data), .Y_Data(Y_Data),
+    .Zhigh_Data(Zhigh_Data), .Zlow_Data(Zlow_Data), .LO_Data(LO_Data), .MAR_Data(MAR_Data),
+    .MDR_Data(MDR_Data), .InPort_Data(InPort_Data), .C_sign_extended_Data(C_sign_extended_Data),
+    .Mdatain(Mdatain), .Write(Write), .Gra(Gra), .Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout),
+    .BAout(BAout), .CON_out(CON_out), .alu_instruction_bits(alu_instruction_bits),
+    .InPort_Data_In(InPort_Data_In), .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
 );
 
 initial
 begin
     clk = 1;
-    forever 
-	begin
-		clk = ~clk;
-		#10;
-	end
+    forever begin clk = ~clk; #10; end
 end
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Add or remove cases as needed.
 parameter Default = 4'b0000, R1Load = 4'b0001, T0 = 4'b0010, T1 = 4'b0011, T2 = 4'b0100, T3 = 4'b0101,
     T4 = 4'b0110, T5 = 4'b01110;
 reg [3:0] Present_state = Default;
@@ -78,13 +73,13 @@ end
 always@(Present_state)
 begin
 	case(Present_state)
-        Default: begin // Assert all control signals to 0.
-            PC_in <= 0; IR_in <= 0; Y_in <= 0; Z_in <= 0; HI_in <= 0; LO_in <= 0;  MAR_in <= 0; MDR_in <= 0;
-            OutPort_in <= 0; PC_out <= 0; Zhigh_out <= 0; Zlow_out <= 0; HI_out <= 0; LO_out <= 0;
-            MDR_out <= 0; InPort_out <= 0; C_out <= 0; Read <= 0; Write <= 0; Gra <= 0; Grb <= 0; Grc <= 0;
-            Rin <= 0; Rout <= 0; BAout <= 0; alu_instruction_bits <= 0;
+        Default: begin
+            PC_in <= 0; IR_in <= 0; Y_in <= 0; Z_in <= 0; HI_in <= 0; LO_in <= 0;  MAR_in <= 0; 
+            MDR_in <= 0; OutPort_in <= 0; PC_out <= 0; Zhigh_out <= 0; Zlow_out <= 0; HI_out <= 0; 
+            LO_out <= 0; MDR_out <= 0; InPort_out <= 0; C_out <= 0; Read <= 0; Write <= 0; Gra <= 0; 
+            Grb <= 0; Grc <= 0; Rin <= 0; Rout <= 0; BAout <= 0; alu_instruction_bits <= 0;
         end
-        R1Load: begin
+        R1Load: begin // Preload R1 with 2F54
             #0; InPort_Data_In <= 32'h2F54; InPort_out <= 1; RX_in_man <= 16'b0000000000000010;
             #40; InPort_Data_In <= 32'hX; InPort_out <= 0; RX_in_man <= 16'b0;
         end
@@ -101,14 +96,14 @@ begin
             #40; MDR_out <= 0; IR_in <= 0;  
         end
         T3: begin
-            #0; Grb <= 1; Rout <= 1; Y_in <= 1;
-            #40; Grb <= 0; Rout <= 0; Y_in <= 0;
+            #0; Grb <= 1; BAout <= 1; Y_in <= 1;
+            #40; Grb <= 0; BAout <= 0; Y_in <= 0;
         end
-        T4: begin // Calculate result of R1 + $45 = $2F99
+        T4: begin // Calculate value of R1 + $45 = $2F99
             #0; C_out <= 1; alu_instruction_bits <= 5'b00011; Z_in <= 1;
             #40; C_out <= 0; alu_instruction_bits <= 0; Z_in <= 0;
         end
-        T5: begin // Store value into R0 (0x2F99).
+        T5: begin // Store value into R0.
             #0; Zlow_out <= 1; Gra <= 1; Rin <= 1;
             #40; Zlow_out <= 0; Gra <= 0; Rin <= 0;
         end
