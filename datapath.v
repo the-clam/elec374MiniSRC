@@ -17,8 +17,9 @@ module datapath(
     input wire Read, Write,
     // Select and Encode Logic Signals
     input wire Gra, Grb, Grc, Rin, Rout, BAout,
-    // Signals from CON FF Logic
+    // Signals for CON FF Logic
     output wire CON_out,
+    input wire CON_in,
     // instruction bits for alu
     input wire [4:0] alu_instruction_bits,
     // manual input enable for registers
@@ -99,6 +100,6 @@ select_encode the_select_encode(
 );
 /* CON FF LOGIC */
 con_ff_logic the_con_ff_logic(
-    .CON_in(clk), .clr(clr), .IR_Data_In(IR_Data), .Bus_Data_In(Bus_Data), .CON_out(CON_out)
+    .CON_in(CON_in), .clr(clr), .IR_Data_In(IR_Data), .Bus_Data_In(Bus_Data), .CON_out(CON_out)
 );
 endmodule

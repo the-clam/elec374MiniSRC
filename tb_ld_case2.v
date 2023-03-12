@@ -15,6 +15,7 @@ module tb_ld_case2;
     reg Gra, Grb, Grc, Rin, Rout, BAout;
     // Signals from CON FF Logic
     wire CON_out;
+    reg CON_in;
     // instruction bits for alu
     reg [4:0] alu_instruction_bits;
 	// input/output ports
@@ -42,9 +43,9 @@ datapath DUT(
     .Zhigh_Data(Zhigh_Data), .Zlow_Data(Zlow_Data), .LO_Data(LO_Data), .MAR_Data(MAR_Data),
     .MDR_Data(MDR_Data), .InPort_Data(InPort_Data), .C_sign_extended_Data(C_sign_extended_Data), 
     .Mdatain(Mdatain), .Write(Write), .Gra(Gra), .Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout), 
-    .BAout(BAout), .CON_out(CON_out), .alu_instruction_bits(alu_instruction_bits),
-    .InPort_Data_In(InPort_Data_In), .Outport_Data_Out(Outport_Data_Out),
-    .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
+    .BAout(BAout), .CON_in(CON_in), .CON_out(CON_out),
+    .alu_instruction_bits(alu_instruction_bits), .InPort_Data_In(InPort_Data_In),
+    .Outport_Data_Out(Outport_Data_Out), .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
 );
 
 initial begin
