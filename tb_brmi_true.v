@@ -80,8 +80,8 @@ always@(Present_state) begin
             LO_out <= 0; MDR_out <= 0; InPort_out <= 0; C_out <= 0; Read <= 0; Write <= 0; Gra <= 0;
             Grb <= 0; Grc <= 0; Rin <= 0; Rout <= 0; BAout <= 0; alu_instruction_bits <= 0;
         end
-        R6Load: begin // Preload R6 with 0x2.
-            #0; InPort_Data_In <= 32'h2; InPort_out <= 1; RX_in_man <= 16'b0000000000001000;
+        R6Load: begin // Preload R6 with 0x3 (branch taken)
+            #0; InPort_Data_In <= 32'h3; InPort_out <= 1; RX_in_man <= 16'b0000000000001000; //check rx val
             #40; InPort_Data_In <= 32'hX; InPort_out <= 0; RX_in_man <= 16'b0;
         end
         T0: begin // T0-T2: Instruction Fetch from 0x0, Increment PC
@@ -108,7 +108,7 @@ always@(Present_state) begin
             #0; C_out <= 1; alu_instruction_bits <= 5'b00011; Z_in <= 1;
             #40; C_out <= 0; alu_instruction_bits <= 0; Z_in <= 0;
         end
-        T6: begin // branch taken, increment PC
+        T6: begin // branch taken
             #0; Zlow_out <= 1; PC_in <= 1; // + C_out?
             #40; Zlow_out <= 0; PC_in <= 0;
         end
