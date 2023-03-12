@@ -15,6 +15,7 @@ module tb_brpl_true;
     reg Gra, Grb, Grc, Rin, Rout, BAout;
     // Signals from CON FF Logic
     wire CON_out;
+    reg CON_in;
     // instruction bits for alu
     reg [4:0] alu_instruction_bits;
 	// input/output ports
@@ -42,9 +43,9 @@ datapath DUT(
     .Zhigh_Data(Zhigh_Data), .Zlow_Data(Zlow_Data), .LO_Data(LO_Data), .MAR_Data(MAR_Data),
     .MDR_Data(MDR_Data), .InPort_Data(InPort_Data), .C_sign_extended_Data(C_sign_extended_Data), 
     .Mdatain(Mdatain), .Write(Write), .Gra(Gra), .Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout), 
-    .BAout(BAout), .CON_out(CON_out), .alu_instruction_bits(alu_instruction_bits),
-    .InPort_Data_In(InPort_Data_In), .Outport_Data_Out(Outport_Data_Out),
-    .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
+    .BAout(BAout), .CON_in(CON_in), .CON_out(CON_out),
+    .alu_instruction_bits(alu_instruction_bits), .InPort_Data_In(InPort_Data_In),
+    .Outport_Data_Out(Outport_Data_Out), .RX_in_man(RX_in_man), .RX_out_man(RX_out_man)
 );
 
 initial begin
@@ -55,7 +56,7 @@ end
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 parameter Default = 4'b0000, R6Load = 4'b0001, T0 = 4'b0010, T1 = 4'b0011, T2 = 4'b0100, T3 = 4'b0101,
-    T4 = 4'b0110, T5 = 4'b0111, T6 = 4'b1000, T7 = 4'b1001;
+    T4 = 4'b0110, T5 = 4'b0111, T6 = 4'b1000;
 reg [3:0] Present_state = Default;
 
 always@(posedge clk) begin
@@ -80,15 +81,15 @@ always@(Present_state) begin
             LO_out <= 0; MDR_out <= 0; InPort_out <= 0; C_out <= 0; Read <= 0; Write <= 0; Gra <= 0;
             Grb <= 0; Grc <= 0; Rin <= 0; Rout <= 0; BAout <= 0; alu_instruction_bits <= 0;
         end
-        R6Load: begin // Preload R6 with 0x2 (branch taken)
-            #0; InPort_Data_In <= 32'h2; InPort_out <= 1; RX_in_man <= 16'b0000000001000000; //check rx val
+        R6Load: begin // Preload R6 with 0x22 (branch taken)
+            #0; InPort_Data_In <= 32'h22; InPort_out <= 1; RX_in_man <= 16'b0000000001000000;
             #40; InPort_Data_In <= 32'hX; InPort_out <= 0; RX_in_man <= 16'b0;
         end
         T0: begin // T0-T2: Instruction Fetch from 0x0, Increment PC
             #0; PC_out <= 1; MAR_in <= 1; IncPC <= 1; Z_in <= 1;
             #40; PC_out <= 0; MAR_in <= 0; IncPC <= 0; Z_in <= 0;
         end
-        T1: begin // Instruction is brpl R6, 25 (true)
+        T1: begin // Instruction is brpl R6, 25
             #0; Zlow_out <= 1; PC_in <= 1; Read <= 1; MDR_in <= 1;
             #40; Zlow_out <= 0; PC_in <= 0; Read <= 0; MDR_in <= 0;
         end
@@ -96,20 +97,21 @@ always@(Present_state) begin
             #0; MDR_out <= 1; IR_in <= 1;
             #40; MDR_out <= 0; IR_in <= 0;  
         end
-        T3: begin // load value of R6 into CON????? 
-            #0; Grb <= 1; Rout <= 1; CON_out <= 1;
-            #40; Grb <= 0; Rout <= 0; CON_out <= 0;
+        T3: begin // check condition
+            #0; Gra <= 1; Rout <= 1; 
+            #20; CON_in <= 1;
+            #15; Gra <= 0; Rout <= 0; CON_in <= 0;
         end
-        T4: begin // brpl R6, 25 (true)
+        T4: begin // load current PC Into Y_in
             #0; PC_out <= 1; Y_in <= 1;
             #40; PC_out <= 0; Y_in <= 0;  
         end
-        T5: begin // take result and store into R6
+        T5: begin // PC (current) + C
             #0; C_out <= 1; alu_instruction_bits <= 5'b00011; Z_in <= 1;
             #40; C_out <= 0; alu_instruction_bits <= 0; Z_in <= 0;
         end
-        T6: begin // branch taken
-            #0; Zlow_out <= 1; PC_in <= 1; // + C_out?
+        T6: begin // if condition true, then change PC to alu result
+            #0; Zlow_out <= 1; if(CON_out) PC_in <= 1;
             #40; Zlow_out <= 0; PC_in <= 0;
         end
     endcase
