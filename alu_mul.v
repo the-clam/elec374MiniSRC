@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module alu_mul(
 	input signed [31:0] A, B,// multiplicand and multiplier 
 	output signed [63:0] P // product

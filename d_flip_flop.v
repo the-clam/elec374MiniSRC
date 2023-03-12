@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module d_flip_flop(
     input wire clk, clr, D,
     output reg Q, notQ

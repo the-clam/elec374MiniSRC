@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module alu_rol (
 	input wire [31:0] data_input, num_rotates, 
 	output reg [31:0] data_output

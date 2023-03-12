@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module reg32_mdr(
 	input wire [31:0] MDMuxIn0, MDMuxIn1,
 	input wire MDMux_sel, clr, clk, en,

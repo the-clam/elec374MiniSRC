@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module dec_4_to_16(
     input wire [3:0] dec_input,
     output reg [15:0] dec_output

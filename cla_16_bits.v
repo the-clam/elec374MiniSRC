@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module cla_16_bits(
 	input wire [15:0] A, B, 
    input wire C_in, 

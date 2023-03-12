@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module alu_sub(
     input wire [31:0] A, B,
     input wire C_in,

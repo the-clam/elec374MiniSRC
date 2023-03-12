@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module alu_shra (
 	input wire [31:0] data_input, num_shifts,
 	output wire [31:0] data_output

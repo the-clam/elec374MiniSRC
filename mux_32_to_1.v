@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module mux_32_to_1(
 	// mux inputs
 	input wire [31:0] mux_input_0, mux_input_1, mux_input_2, mux_input_3, mux_input_4, mux_input_5,  

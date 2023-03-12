@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module datapath(
     // CPU Signals
     input clk, clr,

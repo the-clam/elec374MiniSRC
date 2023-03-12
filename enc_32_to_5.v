@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module enc_32_to_5(
     input wire [31:0] enc_input,
     output reg [4:0] enc_output

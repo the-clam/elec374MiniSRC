@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module alu(
 	input wire [4:0] alu_instruction_bits,
 	input wire [31:0] A_in, B_in,

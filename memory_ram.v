@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module memory_ram(
 	input wire clk, read, write,
 	input wire [8:0] address_in,

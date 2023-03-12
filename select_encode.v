@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module select_encode(
 	input wire Gra, Grb, Grc, Rin, Rout, BAout,
 	input wire [31:0] IR_Data,

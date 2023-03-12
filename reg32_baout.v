@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module reg32_baout(
     input wire clr, clk, en, BAout,
     input wire [31:0] D,

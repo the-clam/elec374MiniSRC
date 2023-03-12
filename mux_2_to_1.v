@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module mux_2_to_1(
 	input wire [31:0] mux_input_0, mux_input_1, // mux inputs to select from
 	input wire mux_sel, // mux select signal

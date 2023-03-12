@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module bus (
 	// select signals
 	input wire R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out,

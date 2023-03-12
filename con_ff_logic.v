@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module con_ff_logic(
 	input wire CON_in, clr,// assuming CON_in is clock signal for the DFF
 	input wire [31:0] IR_Data_In,

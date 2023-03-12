@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module alu_div(
 	input signed [31:0] A, B, // dividend/divisor
 	output signed [31:0] Q, R // quotient/remainder	

@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module reg32 (
     input wire clr, clk, en,
     input wire [31:0] D,

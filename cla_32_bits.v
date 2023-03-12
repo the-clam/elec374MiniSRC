@@ -1,4 +1,3 @@
-`timescale 1ns / 10ps
 module cla_32_bits(
    input wire [31:0] A, B, 
    input wire C_in, 
