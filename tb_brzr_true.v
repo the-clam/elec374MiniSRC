@@ -54,16 +54,64 @@ end
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+parameter Default = 4'b0000, R6Load = 4'b0001, T0 = 4'b0010, T1 = 4'b0011, T2 = 4'b0100, T3 = 4'b0101,
+    T4 = 4'b0110, T5 = 4'b0111, T6 = 4'b1000, T7 = 4'b1001;
+reg [3:0] Present_state = Default;
 
+always@(posedge clk) begin
+	case (Present_state)
+		Default : #40 Present_state = R6Load;
+        R6Load : #30 Present_state = T0;
+		T0 : #30 Present_state = T1;
+		T1 : #30 Present_state = T2;
+		T2 : #30 Present_state = T3;
+		T3 : #30 Present_state = T4;
+		T4 : #30 Present_state = T5;
+        T5 : #30 Present_state = T6;
+        T6 : #30 Present_state = 4'bXXXX;
+	endcase
+end
 
-
-
-
-
-
-
-
-
-
-
+always@(Present_state) begin
+	case(Present_state)
+        Default: begin
+            PC_in <= 0; IR_in <= 0; Y_in <= 0; Z_in <= 0; HI_in <= 0; LO_in <= 0;  MAR_in <= 0;
+            MDR_in <= 0; OutPort_in <= 0; PC_out <= 0; Zhigh_out <= 0; Zlow_out <= 0; HI_out <= 0; 
+            LO_out <= 0; MDR_out <= 0; InPort_out <= 0; C_out <= 0; Read <= 0; Write <= 0; Gra <= 0;
+            Grb <= 0; Grc <= 0; Rin <= 0; Rout <= 0; BAout <= 0; alu_instruction_bits <= 0;
+        end
+        R6Load: begin // Preload R6 with 0x2.
+            #0; InPort_Data_In <= 32'h2; InPort_out <= 1; RX_in_man <= 16'b0000000000001000;
+            #40; InPort_Data_In <= 32'hX; InPort_out <= 0; RX_in_man <= 16'b0;
+        end
+        T0: begin // T0-T2: Instruction Fetch from 0x0, Increment PC
+            #0; PC_out <= 1; MAR_in <= 1; IncPC <= 1; Z_in <= 1;
+            #40; PC_out <= 0; MAR_in <= 0; IncPC <= 0; Z_in <= 0;
+        end
+        T1: begin // Instruction is brzr R6, 25 (true)
+            #0; Zlow_out <= 1; PC_in <= 1; Read <= 1; MDR_in <= 1;
+            #40; Zlow_out <= 0; PC_in <= 0; Read <= 0; MDR_in <= 0;
+        end
+        T2: begin
+            #0; MDR_out <= 1; IR_in <= 1;
+            #40; MDR_out <= 0; IR_in <= 0;  
+        end
+        T3: begin // load value of R6 into CON????? 
+            #0; Grb <= 1; Rout <= 1; CON_out <= 1;
+            #40; Grb <= 0; Rout <= 0; CON_out <= 0;
+        end
+        T4: begin // brzr R6, 25 (true)
+            #0; PC_out <= 1; Y_in <= 1;
+            #40; PC_out <= 0; Y_in <= 0;  
+        end
+        T5: begin // take result and store into R6
+            #0; C_out <= 1; alu_instruction_bits <= 5'b00011; Z_in <= 1;
+            #40; C_out <= 0; alu_instruction_bits <= 0; Z_in <= 0;
+        end
+        T6: begin // branch taken, increment PC
+            #0; Zlow_out <= 1; PC_in <= 1; // + C_out?
+            #40; Zlow_out <= 0; PC_in <= 0;
+        end
+    endcase
+end
 endmodule
