@@ -81,7 +81,7 @@ always@(Present_state) begin
             Grb <= 0; Grc <= 0; Rin <= 0; Rout <= 0; BAout <= 0; alu_instruction_bits <= 0;
         end
         R6Load: begin // Preload R6 with 0x3 (branch not taken)
-            #0; InPort_Data_In <= 32'h3; InPort_out <= 1; RX_in_man <= 16'b0000000000001000; //check rx val
+            #0; InPort_Data_In <= 32'h3; InPort_out <= 1; RX_in_man <= 16'b0000000001000000; //check rx val
             #40; InPort_Data_In <= 32'hX; InPort_out <= 0; RX_in_man <= 16'b0;
         end
         T0: begin // T0-T2: Instruction Fetch from 0x0, Increment PC
