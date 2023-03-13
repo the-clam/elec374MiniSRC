@@ -7,7 +7,6 @@ module select_encode(
 	wire [3:0] Ra_sel, Rb_sel, Rc_sel; // and with IR bits for reg inputs
 	wire [3:0] dec_input; 
 	wire [15:0] dec_output; 
-	
 	dec_4_to_16 dec_4_to_16_instance(.dec_input(dec_input), .dec_output(dec_output));
 	
 	// Instruction bits & with Gra/b/c signal
