@@ -28,7 +28,9 @@ module datapath(
     // instruction bits for alu
     output wire [4:0] alu_instruction_bits,
     // manual input enable for registers
-    output wire [15:0] RX_in_man
+    output wire [15:0] RX_in_man,
+    // present state
+    output wire [5:0] present_state
 );
 /* REGISTERS */
 reg32_baout R0_reg (
@@ -119,6 +121,7 @@ control_unit the_control_unit(
     .IncPC(IncPC),
     .Read(Read), .Write(Write),
     .Gra(Gra), .Grb(Grb), .Grc(Grc), .BAout(BAout),
-    .CON_in(CON_in)
+    .CON_in(CON_in),
+    .present_state(present_state)
 );
 endmodule

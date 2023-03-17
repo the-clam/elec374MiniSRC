@@ -1,3 +1,4 @@
+`timescale 1ns / 10ps
 module control_unit(
     // Control Unit Inputs
     input wire clk, reset, stop, CON_FF,
@@ -17,7 +18,9 @@ module control_unit(
     // Select and Encode
     output reg Gra, Grb, Grc, BAout,
     // ConFF Enable
-    output reg CON_in
+    output reg CON_in,
+    // Current State
+    output reg [5:0] present_state
 );
 
 // Declare states - // est need 64 @ max? so use 6 bit present state
@@ -32,9 +35,7 @@ parameter
     JumpReg3 = 6'b011001, JumpAndLink3 = 6'b011010, JumpAndLink4 = 6'b011011, InPort3 = 6'b011100,
     OutPort3 = 6'b011101, MoveFromHI3 = 6'b011110, MoveFromLO3 = 6'b011111, 
     Nop3 = 6'b100000, Halt3 = 6'b100001;
-
-// Hold current state of control seqeuence, initialize to reset state.
-reg [5:0] present_state = reset_state;
+initial present_state = reset_state; // Initialize current state.
 
 // FSM state changes on input.
 always@(posedge clk, posedge reset, posedge stop)
@@ -45,7 +46,7 @@ begin
         present_state = Halt3;
     else if (run == 1)
         case(present_state)
-            reset_state : #30 present_state = Fetch0;
+            reset_state : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
             Fetch0 : #30 present_state = Fetch1;
             Fetch1 : #30 present_state = Fetch2;
             Fetch2 : #30
@@ -90,10 +91,10 @@ begin
                         5'b00010 : present_state = st6; //st
                     endcase
                 end
-            ldi5 : #30 present_state = Fetch0;
+            ldi5 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
             ld6 : #30 present_state = ld7;
-            ld7: #30 present_state = Fetch0;
-            st6 : #30 present_state = Fetch0;
+            ld7: begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
+            st6 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
             
             // ALU - 3 register
             ThreeParam3 : #30
@@ -105,34 +106,34 @@ begin
                     endcase
                 end
             ThreeParamReg4, ThreeParamImm4 : #30 present_state = ThreeParam5;
-            ThreeParam5 : #30 present_state = Fetch0;
+            ThreeParam5 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
 
             // ALU - 2 registers, 64 bit result
             TwoParamLong3 : #30 present_state = TwoParamLong4;
             TwoParamLong4 : #30 present_state = TwoParamLong5;
             TwoParamLong5 : #30 present_state = TwoParamLong6;
-            TwoParamLong6 : #30 present_state = Fetch0;
+            TwoParamLong6 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
 
             // ALU - 2 register, 32 bits result
             TwoParamShort3 : #30 present_state = TwoParamShort4;
-            TwoParamShort4 : #30 present_state = Fetch0;
+            TwoParamShort4 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
 
             // Branches
             Branch3 : #30 present_state = Branch4;
             Branch4 : #30 present_state = Branch5;
             Branch5 : #30 present_state = Branch6;
-            Branch6 : #30 present_state = Fetch0;
+            Branch6 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
 
             // Special Instructions
-            JumpReg3 : #30 present_state = Fetch0;
+            JumpReg3 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
             JumpAndLink3 : #30 present_state = JumpAndLink4;
-            JumpAndLink4 : #30 present_state = Fetch0;
-            InPort3 : #30 present_state = Fetch0;
-            OutPort3 : #30 present_state = Fetch0;
-            MoveFromHI3 : #30 present_state = Fetch0;
-            MoveFromLO3 : #30 present_state = Fetch0;
-            Nop3 : #30 present_state = Fetch0;
-            Halt3 : #30 present_state = Fetch0;
+            JumpAndLink4 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
+            InPort3 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
+            OutPort3 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
+            MoveFromHI3 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
+            MoveFromLO3 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
+            Nop3 : begin #30 present_state = 6'bXXXXXX; #40 present_state = Fetch0; end
+            Halt3 : #30 present_state = 6'bXXXXXX; 
         endcase
 end
 
@@ -189,8 +190,8 @@ begin
             #40; MDR_out <= 0; Gra <= 0; Rin <= 0;
         end
         st6: begin
-            #0; Read <= 1; MDR_in <= 1;
-            #40; Read <= 0; MDR_in <= 0;
+            #0; Gra <= 1; Rout <= 1; MDR_in <= 1; Write <= 1;
+            #40; Gra <= 0; Rout <= 0; MDR_in <= 0; Write <= 0;
         end
 
         // ALU Instructions - 3 Ra, Rb, Rc, or Ra, Rb, C
@@ -231,13 +232,13 @@ begin
         end
         TwoParamLong6 : begin
             #0; Zhigh_out <= 1; HI_in <= 1;
-            #40; Zhigh_out <= 0; HI_out <= 0;
+            #40; Zhigh_out <= 0; HI_in <= 0;
         end
 
         // ALU - 2 register, 32 bits result
         TwoParamShort3 : begin
             #0; Grb <= 1; Rout <= 1; alu_instruction_bits <= IR_Data[31:27]; Z_in <= 1;
-            #40; Grb <= 1; Rout <= 1; alu_instruction_bits <= IR_Data[31:27]; Z_in <= 1;
+            #40; Grb <= 0; Rout <= 0; alu_instruction_bits <= IR_Data[31:27]; Z_in <= 0;
         end
         TwoParamShort4 : begin
             #0; Zlow_out <= 1; Gra <= 1; Rin <= 1;
@@ -296,8 +297,7 @@ begin
             // Do nothing
         end
         Halt3: begin
-            #0; run <= 0;
-            #40;
+            #40 run <= 0;
         end
     endcase
 end    
