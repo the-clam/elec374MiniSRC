@@ -7,7 +7,6 @@ module datapath(
     input wire PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, OutPort_in, IncPC,
     // Bus Register Output Controls
     output wire [15:0] RX_out, // receives input from select and encode
-    // from control unit
     input wire PC_out, Zhigh_out, Zlow_out, HI_out, LO_out, MDR_out, InPort_out, C_out,
     // Data Signals for Bus, ALU, and Registers
     output wire [31:0] Bus_Data, ALUHigh_Data, ALULow_Data, R0_Data, R1_Data, R2_Data, R3_Data, R4_Data, 
