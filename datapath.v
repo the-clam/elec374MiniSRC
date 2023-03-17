@@ -1,31 +1,35 @@
 module datapath(
-    // CPU Signals
-    input wire clk, clr,
+    // System Inputs
+    input wire clk,
+    input wire reset, // external reset button to start from beginning
+    input wire stop, // external stop, same action as halt instruction
+    input wire [31:0] InPort_Data_In,
+    output wire [31:0] Outport_Data_Out,
+    output wire run, // indicates whether program is running or not
+    output wire clr, // signal from control unit to indicate clearing to rest of Mini SRC
+
     // Bus Register Input Controls
     output wire [15:0] RX_in, // receives input from select and encode
-    // from control unit
-    input wire PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, OutPort_in, IncPC,
+    output wire PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, OutPort_in, IncPC,
     // Bus Register Output Controls
     output wire [15:0] RX_out, // receives input from select and encode
-    input wire PC_out, Zhigh_out, Zlow_out, HI_out, LO_out, MDR_out, InPort_out, C_out,
+    output wire PC_out, Zhigh_out, Zlow_out, HI_out, LO_out, MDR_out, InPort_out, C_out,
     // Data Signals for Bus, ALU, and Registers
     output wire [31:0] Bus_Data, ALUHigh_Data, ALULow_Data, R0_Data, R1_Data, R2_Data, R3_Data, R4_Data, 
         R5_Data, R6_Data, R7_Data, R8_Data, R9_Data, R10_Data, R11_Data, R12_Data, R13_Data, R14_Data,
         R15_Data, PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data,
         InPort_Data, C_sign_extended_Data, Mdatain,
     // Signals to RAM/MDR
-    input wire Read, Write,
+    output wire Read, Write,
     // Select and Encode Logic Signals
-    input wire Gra, Grb, Grc, Rin, Rout, BAout,
+    output wire Gra, Grb, Grc, Rin, Rout, BAout,
     // Signals for CON FF Logic
     output wire CON_out,
-    input wire CON_in,
+    output wire CON_in,
     // instruction bits for alu
-    input wire [4:0] alu_instruction_bits,
+    output wire [4:0] alu_instruction_bits,
     // manual input enable for registers
-    input wire [31:0] InPort_Data_In, 
-    output wire [31:0] Outport_Data_Out,
-    input wire [15:0] RX_in_man, RX_out_man
+    output wire [15:0] RX_in_man
 );
 /* REGISTERS */
 reg32_baout R0_reg (
@@ -66,13 +70,11 @@ reg32 OutPort (.clr(clr), .clk(clk), .en(OutPort_in), .D(Bus_Data), .Q(Outport_D
 /* BUS */
 bus the_bus(
     // Out Signals
-    .R0out(RX_out[0]|RX_out_man[0]), .R1out(RX_out[1]|RX_out_man[1]), .R2out(RX_out[2]|RX_out_man[2]),
-    .R3out(RX_out[3]|RX_out_man[3]), .R4out(RX_out[4]|RX_out_man[4]), .R5out(RX_out[5]|RX_out_man[5]),
-    .R6out(RX_out[6]|RX_out_man[6]), .R7out(RX_out[7]|RX_out_man[7]), .R8out(RX_out[8]|RX_out_man[8]),
-    .R9out(RX_out[9]|RX_out_man[9]), .R10out(RX_out[10]|RX_out_man[10]), .R11out(RX_out[11]|RX_out_man),
-    .R12out(RX_out[12]|RX_out_man[12]), .R13out(RX_out[13]|RX_out_man[13]), 
-    .R14out(RX_out[14]|RX_out_man[14]), .R15out(RX_out[15]|RX_out_man[15]), .HIout(HI_out), 
-    .LOout(LO_out), .Zhighout(Zhigh_out), .Zlowout(Zlow_out), .PCout(PC_out), .MDRout(MDR_out),
+    .R0out(RX_out[0]), .R1out(RX_out[1]), .R2out(RX_out[2]), .R3out(RX_out[3]), .R4out(RX_out[4]),
+    .R5out(RX_out[5]), .R6out(RX_out[6]), .R7out(RX_out[7]), .R8out(RX_out[8]), .R9out(RX_out[9]),
+    .R10out(RX_out[10]), .R11out(RX_out[11]), .R12out(RX_out[12]), .R13out(RX_out[13]), 
+    .R14out(RX_out[14]), .R15out(RX_out[15]), .HIout(HI_out), .LOout(LO_out),
+    .Zhighout(Zhigh_out), .Zlowout(Zlow_out), .PCout(PC_out), .MDRout(MDR_out),
     .InPortout(InPort_out), .Cout(C_out),
     // Mux In
     .BusMuxIn_R0(R0_Data), .BusMuxIn_R1(R1_Data), .BusMuxIn_R2(R2_Data), .BusMuxIn_R3(R3_Data), 
@@ -101,5 +103,23 @@ select_encode the_select_encode(
 /* CON FF LOGIC */
 con_ff_logic the_con_ff_logic(
     .CON_in(CON_in), .clr(clr), .IR_Data_In(IR_Data), .Bus_Data_In(Bus_Data), .CON_out(CON_out)
+);
+/* CONTROL UNIT */
+control_unit the_control_unit(
+    // Inputs
+    .clk(clk), .reset(reset), .stop(stop), .CON_FF(CON_out),
+    .IR_Data(IR_Data),
+    // Outputs
+    .run(run), .clr(clr),
+    .Rout(Rout), .PC_out(PC_out), .MDR_out(MDR_out), .Zhigh_out(Zhigh_out), .Zlow_out(Zlow_out),
+        .HI_out(HI_out), .LO_out(LO_out), .InPort_out(InPort_out), .C_out(C_out),
+    .Rin(Rin), .HI_in(HI_in), .LO_in(LO_in), .PC_in(PC_in), .IR_in(IR_in), .Y_in(Y_in), .Z_in(Z_in),
+        .MAR_in(MAR_in), .MDR_in(MDR_in), .OutPort_in(OutPort_in),
+    .RX_in_man(RX_in_man),
+    .alu_instruction_bits(alu_instruction_bits),
+    .IncPC(IncPC),
+    .Read(Read), .Write(Write),
+    .Gra(Gra), .Grb(Grb), .Grc(Grc), .BAout(BAout),
+    .CON_in(CON_in)
 );
 endmodule
