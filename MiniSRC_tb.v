@@ -4,9 +4,11 @@ module MiniSRC_tb;
     reg clk = 0;
     reg reset = 0;
     reg stop = 0;
-    reg [31:0] InPort_Data_In;
-    wire [31:0] Outport_Data_Out;
     wire run, clr;
+
+    // Input/Output Ports (Optional)
+    // reg [31:0] InPort_Data_In;
+    // wire [31:0] Outport_Data_Out;
 
     // Required Register Data Signals
     wire [31:0] PC_Data, IR_Data, MAR_Data, MDR_Data, R0_Data, R1_Data, R2_Data, R3_Data, R4_Data,
@@ -38,9 +40,10 @@ module MiniSRC_tb;
 
     datapath MiniSRC(
         // System Inputs/Outputs
-        .clk(clk), .reset(reset), .stop(stop), 
-        .InPort_Data_In(InPort_Data_In), .Outport_Data_Out(Outport_Data_Out),
-        .run(run), .clr(clr),
+        .clk(clk), .reset(reset), .stop(stop), .run(run), .clr(clr),
+
+        // Input/Output Ports (Optional)
+        // .InPort_Data_In(InPort_Data_In), .Outport_Data_Out(Outport_Data_Out),
 
         // Register Data Signals (Required)
         .PC_Data(PC_Data), .IR_Data(IR_Data), .MAR_Data(MAR_Data), .MDR_Data(MDR_Data), .R0_Data(R0_Data),
