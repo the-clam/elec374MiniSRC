@@ -32,7 +32,6 @@ module MiniSRC_tb;
     // wire [4:0] alu_instruction_bits;
     // // Manual Input Enable for Registers (optional)
     // wire [15:0] RX_in_man;
-
     // Present state (optional)
     wire [5:0] present_state;
 
@@ -67,7 +66,6 @@ module MiniSRC_tb;
         // .alu_instruction_bits(alu_instruction_bits),
         // // Manual Input Enable for Registers (optional)
         // .RX_in_man(RX_in_man),
-
         // Present state (optional)
         .present_state(present_state)
     );
