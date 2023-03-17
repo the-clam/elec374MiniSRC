@@ -24,8 +24,7 @@ module datapath(
     // Select and Encode Logic Signals
     output wire Gra, Grb, Grc, Rin, Rout, BAout,
     // Signals for CON FF Logic
-    output wire CON_out,
-    output wire CON_in,
+    output wire CON_out, CON_in,
     // instruction bits for alu
     output wire [4:0] alu_instruction_bits,
     // manual input enable for registers
