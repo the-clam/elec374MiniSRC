@@ -1,8 +1,8 @@
-module board_7seg_out (
+module seven_seg_out(
     output reg [7:0] display,
-    input clk,
-    input [3:0] data
-)
+    input wire clk,
+    input wire [3:0] data
+);
 
 always@(negedge clk)
 begin
@@ -26,21 +26,3 @@ begin
     endcase
 end
 endmodule
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
