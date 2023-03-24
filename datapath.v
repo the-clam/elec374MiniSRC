@@ -30,7 +30,10 @@ module datapath(
     // manual input enable for registers
     output wire [15:0] RX_in_man,
     // present state
-    output wire [5:0] present_state
+    output wire [5:0] present_state,
+	// simulated seven-segment displays
+	output wire [7:0] upper_seg_out,
+    output wire [7:0] lower_seg_out
 );
 /* REGISTERS */
 reg32_baout R0_reg (
@@ -123,5 +126,12 @@ control_unit the_control_unit(
     .Gra(Gra), .Grb(Grb), .Grc(Grc), .BAout(BAout),
     .CON_in(CON_in),
     .present_state(present_state)
+);
+/* SEGMENT DISPLAY */
+seven_seg_out upper_seg(
+    .display(upper_seg_out), .clk(clk), .data(Outport_Data_Out[7:4])
+);
+seven_seg_out lower_seg(
+    .display(lower_seg_out), .clk(clk), .data(Outport_Data_Out[3:0])
 );
 endmodule
