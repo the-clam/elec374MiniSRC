@@ -10,28 +10,14 @@ module MiniSRC_tb;
         R5_Data, R6_Data, R7_Data, R8_Data, R9_Data, R10_Data, R11_Data, R12_Data, R13_Data, R14_Data,
         R15_Data, HI_Data, LO_Data;
 
-    // Input/Output Ports (Optional)
-    // reg [31:0] InPort_Data_In;
-    // wire [31:0] Outport_Data_Out;
-    // // Other Data Signals (optional, uncomment to show)
-    // wire [31:0] Bus_Data, ALUHigh_Data, ALULow_Data, Y_Data, Zhigh_Data, Zlow_Data, InPort_Data,
-    //     C_sign_extended_Data, Mdatain;
-    // // Register Input Signals (optional)
-    // wire [15:0] RX_in;
-    // wire PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, OutPort_in, IncPC;
-    // // Register Output Signals (optional)
-    // wire [15:0] RX_out;
-    // wire PC_out, Zhigh_out, Zlow_out, HI_out, LO_out, MDR_out, InPort_out, C_out;
-    // // Signals to RAM/MDR (optional)
-    // wire Read, Write;
-    // // Select and Encode Logic Signals (optional)
-    // wire Gra, Grb, Grc, Rin, Rout, BAout;
-    // // Signals for CON FF Logic (optional)
-    // wire CON_out, CON_in;
-    // // Instruction bits for ALU (optional)
-    // wire [4:0] alu_instruction_bits;
-    // // Manual Input Enable for Registers (optional)
-    // wire [15:0] RX_in_man;
+    // Input/Output Ports
+    reg [31:0] InPort_Data_In = 32'b10001000;
+    reg [31:0] Outport_Data_Out;
+
+    // Seven Segment Displays
+    wire [7:0] upper_seg_out;
+    wire [7:0] lower_seg_out;
+    
     // Present state (optional)
     wire [5:0] present_state;
 
@@ -44,31 +30,14 @@ module MiniSRC_tb;
         .R6_Data(R6_Data), .R7_Data(R7_Data), .R8_Data(R8_Data), .R9_Data(R9_Data), .R10_Data(R10_Data),
         .R11_Data(R11_Data), .R12_Data(R12_Data), .R13_Data(R13_Data), .R14_Data(R14_Data),
         .R15_Data(R15_Data), .HI_Data(HI_Data), .LO_Data(LO_Data),
-        // // Input/Output Ports (Optional)
-        // .InPort_Data_In(InPort_Data_In), .Outport_Data_Out(Outport_Data_Out),
-        // // Other Data Signals (optional, uncomment to show)
-        // .Bus_Data(Bus_Data), .ALUHigh_Data(ALUHigh_Data), .ALULow_Data(ALULow_Data),  .Y_Data(Y_Data), 
-        // .Zhigh_Data(Zhigh_Data), .Zlow_Data(Zlow_Data), .InPort_Data(InPort_Data), 
-        // .C_sign_extended_Data(C_sign_extended_Data), .Mdatain(Mdatain),
-        // // Register Inputs (optional)
-        // .RX_in(RX_in), .PC_in(PC_in), .IR_in(IR_in), .Y_in(Y_in), .Z_in(Z_in), .HI_in(HI_in), 
-        // .LO_in(LO_in), .MAR_in(MAR_in), .MDR_in(MDR_in), .OutPort_in(OutPort_in), .IncPC(IncPC),
-        // // Register Outputs (optional)
-        // .RX_out(RX_out), .PC_out(PC_out), .Zhigh_out(Zhigh_out), .Zlow_out(Zlow_out), .HI_out(HI_out),
-        // .LO_out(LO_out), .MDR_out(MDR_out), .InPort_out(InPort_out), .C_out(C_out),
-        // // Signals to RAM/MDR (optional)
-        // .Read(Read), .Write(Write),
-        // // Select and Encode Logic Signals (optional)
-        // .Gra(Gra), .Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout), .BAout(BAout),
-        // // Signals for CON FF Logic (optional)
-        // .CON_out(CON_out), .CON_in(CON_in),
-        // // Instruction bits for ALU (optional)
-        // .alu_instruction_bits(alu_instruction_bits),
-        // // Manual Input Enable for Registers (optional)
-        // .RX_in_man(RX_in_man),
+        // Input/Output Ports
+        .InPort_Data_In(InPort_Data_In), .Outport_Data_Out(Outport_Data_Out),
         // Present state (optional)
         .present_state(present_state)
     );
+
+    // seven_seg_out (.display(lower_seg_out), .clk(clk), .data(Outport_Data_Out[3:0]));
+    // seven_seg_out upper_seg(.display(upper_seg_out), .clk(clk), .data(Outport_Data_Out[3:0]));
 
     initial begin
         clk = 1;
