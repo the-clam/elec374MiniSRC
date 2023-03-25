@@ -38,11 +38,11 @@ parameter
 initial present_state = reset_state; // Initialize current state.
 
 // FSM state changes on input.
-always@(posedge clk, posedge reset, posedge stop)
+always@(posedge clk, negedge reset, negedge stop)
 begin
-    if(reset == 1)
+    if(reset == 0)
         present_state = reset_state;
-    else if(stop == 1)
+    else if(stop == 0)
         present_state = Halt3;
     else if (run == 1)
         case(present_state)

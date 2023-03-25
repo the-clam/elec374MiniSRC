@@ -3,42 +3,34 @@ module datapath(
     input wire clk,
     input wire reset, // external reset button to start from beginning
     input wire stop, // external stop, same action as halt instruction
-    input wire [31:0] InPort_Data_In,
+    input wire [31:0] InPort_Data_In, // switches
     output wire [31:0] Outport_Data_Out,
     output wire run, // indicates whether program is running or not
-    output wire clr, // signal from control unit to indicate clearing to rest of Mini SRC
-
-    // Bus Register Input Controls
-    output wire [15:0] RX_in, // receives input from select and encode
-    output wire PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, OutPort_in, IncPC,
-    // Bus Register Output Controls
-    output wire [15:0] RX_out, // receives input from select and encode
-    output wire PC_out, Zhigh_out, Zlow_out, HI_out, LO_out, MDR_out, InPort_out, C_out,
-    // Data Signals for Bus, ALU, and Registers
-    output wire [31:0] Bus_Data, ALUHigh_Data, ALULow_Data, R0_Data, R1_Data, R2_Data, R3_Data, R4_Data, 
-        R5_Data, R6_Data, R7_Data, R8_Data, R9_Data, R10_Data, R11_Data, R12_Data, R13_Data, R14_Data,
-        R15_Data, PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data,
-        InPort_Data, C_sign_extended_Data, Mdatain,
-    // Signals to RAM/MDR
-    output wire Read, Write,
-    // Select and Encode Logic Signals
-    output wire Gra, Grb, Grc, Rin, Rout, BAout,
-    // Signals for CON FF Logic
-    output wire CON_out, CON_in,
-    // instruction bits for alu
-    output wire [4:0] alu_instruction_bits,
-    // manual input enable for registers
-    output wire [15:0] RX_in_man,
-    // present state
-    output wire [5:0] present_state,
-	// simulated seven-segment displays
-	output wire [7:0] upper_seg_out,
-    output wire [7:0] lower_seg_out
+	output wire [7:0] upper_seg_out, lower_seg_out // seven-segment display interface
 );
+/* CONNECTIONS */
+// Signal from control unit to indicate clearing to rest of Mini SRC
+wire clr; 
+// Register In/Out Controls
+wire [15:0] RX_in, RX_out;
+wire PC_in, IR_in, Y_in, Z_in, HI_in, LO_in, MAR_in, MDR_in, OutPort_in, IncPC;
+wire PC_out, Zhigh_out, Zlow_out, HI_out, LO_out, MDR_out, InPort_out, C_out;
+// Data Signals for Bus, ALU, and Registers
+wire [31:0] Bus_Data, ALUHigh_Data, ALULow_Data, R0_Data, R1_Data, R2_Data, R3_Data, R4_Data, R5_Data,
+    R6_Data, R7_Data, R8_Data, R9_Data, R10_Data, R11_Data, R12_Data, R13_Data, R14_Data, R15_Data, 
+    PC_Data, IR_Data, Y_Data, Zhigh_Data, Zlow_Data, HI_Data, LO_Data, MAR_Data, MDR_Data, InPort_Data,
+    C_sign_extended_Data, Mdatain;
+// Other Signals
+wire Read, Write, Gra, Grb, Grc, Rin, Rout, BAout, CON_out, CON_in;
+// instruction bits for alu
+wire [4:0] alu_instruction_bits;
+// manual input enable for registers
+wire [15:0] RX_in_man;
+// present state
+wire [5:0] present_state;  
 /* REGISTERS */
 reg32_baout R0_reg (
-    .clr(clr), .clk(clk), .en(RX_in[0]|RX_in_man[0]),
-    .BAout(BAout), .D(Bus_Data), .Q(R0_Data)
+    .clr(clr), .clk(clk), .en(RX_in[0]|RX_in_man[0]), .BAout(BAout), .D(Bus_Data), .Q(R0_Data)
 );
 reg32 R1_reg (.clr(clr), .clk(clk), .en(RX_in[1]|RX_in_man[1]), .D(Bus_Data), .Q(R1_Data));
 reg32 R2_reg (.clr(clr), .clk(clk), .en(RX_in[2]|RX_in_man[2]), .D(Bus_Data), .Q(R2_Data));
@@ -127,7 +119,7 @@ control_unit the_control_unit(
     .CON_in(CON_in),
     .present_state(present_state)
 );
-/* SEGMENT DISPLAY */
+/* SEGMENT DISPLAY INTERFACE */
 seven_seg_out upper_seg(
     .display(upper_seg_out), .clk(clk), .data(Outport_Data_Out[7:4])
 );
