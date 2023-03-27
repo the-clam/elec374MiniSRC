@@ -2,8 +2,8 @@
 module MiniSRC_tb;
     // System Input/Outputs
     reg clk = 0;
-    reg reset = 0;
-    reg stop = 0;
+    reg reset = 1;
+    reg stop = 1;
     wire run;
     
 	 // Input/Output Ports (Optional)
