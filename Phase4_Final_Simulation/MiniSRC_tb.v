@@ -2,8 +2,8 @@
 module MiniSRC_tb;
     // System Input/Outputs
     reg clk = 0;
-    reg reset = 0;
-    reg stop = 0;
+    reg reset = 1;
+    reg stop = 1;
     wire run, clr;
     // Required Register Data Signals
     wire [31:0] PC_Data, IR_Data, MAR_Data, MDR_Data, R0_Data, R1_Data, R2_Data, R3_Data, R4_Data,
